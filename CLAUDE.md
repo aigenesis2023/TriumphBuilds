@@ -24,11 +24,13 @@ Reusable AI agent to assist an expert Storyline developer at Triumph Motorcycles
 
 ## Current project — Key & Keyless Ignition Systems
 
-**Status:** Content extracted and broken down. Module structure proposed. **Awaiting decisions before per-screen ID begins.**
+**Status:** Source extracted, initial structure proposed. **Design phase PARKED until SME content lock.**
 
-**Source:** [Keyless New Proposal 080526.pptx](Keyless%20New%20Proposal%20080526.pptx) — 68 slides, drafter has pre-flagged the e-learning/PDF split (e-learning = 1–39, PDF reference = 40–68).
+**Workflow lesson learned:** Tried a speculative design head-start before the SME meeting; pulled back because the audit trail from source → designs was opaque. Workflow rule going forward: **content + mapping lock with SME first, design after.** Captured in memory as `feedback-content-lock-before-design`.
 
-**Proposed module structure:** 7 sections, ~37–40 screens.
+**Source:** [Keyless New Proposal 080526.pptx](Keyless%20New%20Proposal%20080526.pptx) — 68 slides, drafter has pre-flagged e-learning/PDF split (e-learning = 1–39, PDF reference = 40–68).
+
+**Proposed module structure (to validate with SME, not locked):** 7 sections, ~37–40 screens.
 1. Welcome & Big Picture
 2. The Key System (incl. TPMS + safety)
 3. The Keyless System
@@ -37,16 +39,20 @@ Reusable AI agent to assist an expert Storyline developer at Triumph Motorcycles
 6. Case Study (capstone)
 7. Wrap + PDF signpost
 
-**Pending decisions (see §7 and §8 of [breakdown-and-id-keyless.md](breakdown-and-id-keyless.md)):**
+**SME meeting agenda items (see §7 and §8 of [breakdown-and-id-keyless.md](breakdown-and-id-keyless.md)):**
 1. Duplicate slides 22/24 and 23/25 — intentional or copy-paste?
 2. Add/Re-Register decision — keep in both Key and Keyless sections, or factor out?
-3. Case study placement — capstone (preferred) or embedded?
+3. Case study placement — capstone or embedded?
 4. Knowledge checks — per section, or just mid + final?
 5. Module duration target?
-6. Is the case study Word file available? Need it for Section 6.
-7. The "ideas?" notes in slides 41–55 — for user to answer, or back to SME?
+6. Case study Word file availability (needed for Section 6).
+7. The "ideas?" notes in slides 41–55 — user to answer, or back to SME?
 
-**Next step:** answer the decisions above, then produce the per-screen ID brief for **Section 1: Welcome & Big Picture** (one section at a time — small iterations).
+**Next step (in order):**
+1. SME meeting — walk through proposed structure + agenda above, capture decisions
+2. If SME has sent a revised pptx, re-extract content and refresh the breakdown
+3. Produce a **source-slide → designed-screen mapping document** (one page). SME signs off the mapping before any design work begins.
+4. Only after mapping sign-off — restart design phase. Claude Design becomes a polishing step on locked content, not a content restructurer.
 
 ---
 
