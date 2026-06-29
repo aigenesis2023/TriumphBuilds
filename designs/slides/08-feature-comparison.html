@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Slide 08 — Feature Comparison (Drag-Drop Interaction)</title>
+<title>Slide 08 — Feature Comparison (Drag-Drop, One at a Time)</title>
 <style>
 @font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Regular.otf') format('opentype'); font-weight: 400; }
 @font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Medium.otf') format('opentype'); font-weight: 500; }
@@ -42,19 +42,46 @@ html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--
 .page .cur { color: var(--white); font-weight: 800; }
 .page .dim { color: rgba(255,255,255,0.25); margin: 0 8px; }
 .eyebrow { position: absolute; top: 150px; left: 96px; font-weight: 900; font-size: 32px; letter-spacing: -0.04em; color: var(--red); line-height: 0.8; z-index: 5; }
-.title { position: absolute; top: 192px; left: 96px; z-index: 5; }
-.title h1 { font-weight: 900; font-size: 58px; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
+.title { position: absolute; top: 195px; left: 96px; z-index: 5; }
+.title h1 { font-weight: 900; font-size: 84px; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
 .title h1 .red { color: var(--red); display: block; }
 .foot { position: absolute; bottom: 50px; left: 96px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; }
 .next { position: absolute; bottom: 40px; right: 96px; width: 64px; height: 64px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); font-weight: 600; z-index: 10; }
 
-/* Photo placeholders — right of title */
+/* Progress dots */
+.progress {
+  position: absolute;
+  top: 218px;
+  left: 780px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 5;
+}
+.progress .label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-mid);
+  margin-right: 6px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--hairline);
+}
+.dot.done { background: var(--green); }
+.dot.active { background: var(--red); width: 12px; height: 12px; }
+
+/* Photo placeholders */
 .photos {
   position: absolute;
-  top: 152px;
-  left: 560px;
+  top: 195px;
+  left: 1100px;
   right: 96px;
-  height: 128px;
+  height: 170px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
@@ -68,190 +95,166 @@ html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--
   justify-content: center;
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.18);
-}
-
-/* Whole table block */
-.table-block {
-  position: absolute;
-  top: 295px;
-  left: 96px;
-  right: 96px;
-  bottom: 92px;
-  display: flex;
-  flex-direction: column;
-  z-index: 5;
-}
-
-/* Column widths shared via grid */
-.grid3 { display: grid; grid-template-columns: 300px 1fr 1fr; }
-
-/* Header */
-.t-header {
-  flex-shrink: 0;
-  background: var(--surface-2);
-  border: 1px solid var(--hairline);
-  border-bottom: none;
-}
-.t-header .hcell {
-  padding: 13px 24px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--grey-mid);
-  border-right: 1px solid var(--hairline);
-}
-.t-header .hcell:last-child { border-right: none; }
-.t-header .hcell.kl { color: var(--red); }
-
-/* Active row */
-.t-active {
-  flex-shrink: 0;
-  border: 1px solid var(--red);
-  border-bottom: none;
-  background: rgba(220,25,36,0.06);
-  box-shadow: 0 0 0 1px rgba(220,25,36,0.15);
-}
-.t-active .fcell {
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  border-right: 1px solid rgba(220,25,36,0.3);
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--white);
-  height: 68px;
-}
-.t-active .drop-zone {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 68px;
-  border-right: 1px solid rgba(220,25,36,0.2);
-}
-.t-active .drop-zone:last-child { border-right: none; }
-.drop-inner {
-  width: calc(100% - 28px);
-  height: 44px;
-  border: 2px dashed rgba(255,255,255,0.2);
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.18);
 }
 
-/* Card tray */
-.t-tray {
-  flex-shrink: 0;
-  border: 1px solid rgba(220,25,36,0.3);
-  border-top: none;
-  border-bottom: none;
-  background: rgba(5,5,10,0.7);
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 10px 24px;
-}
-.tray-label {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--grey-mid);
-  white-space: nowrap;
-}
-.drag-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 18px;
+/* Column header */
+.col-header {
+  position: absolute;
+  top: 390px;
+  left: 96px;
+  right: 96px;
+  height: 48px;
+  display: grid;
+  grid-template-columns: 340px 1fr 1fr;
   background: var(--surface-2);
   border: 1px solid var(--hairline);
-  border-radius: 3px;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--grey-hi);
+  z-index: 5;
+}
+.col-header .hcell {
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-mid);
+  border-right: 1px solid var(--hairline);
+}
+.col-header .hcell:last-child { border-right: none; }
+.col-header .hcell.kl { color: var(--red); }
+
+/* Active question row */
+.question-row {
+  position: absolute;
+  top: 438px;
+  left: 96px;
+  right: 96px;
+  height: 120px;
+  display: grid;
+  grid-template-columns: 340px 1fr 1fr;
+  border: 1px solid var(--red);
+  border-top: none;
+  background: rgba(220,25,36,0.05);
+  z-index: 5;
+}
+.question-row .feature-label {
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  border-right: 1px solid rgba(220,25,36,0.3);
+}
+.drop-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(220,25,36,0.2);
+}
+.drop-zone:last-child { border-right: none; }
+.drop-inner {
+  width: calc(100% - 40px);
+  height: 76px;
+  border: 2px dashed rgba(255,255,255,0.18);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.16);
+}
+
+/* Card tray */
+.card-tray {
+  position: absolute;
+  top: 610px;
+  left: 96px;
+  right: 96px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.tray-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--grey-mid);
+}
+.cards {
+  display: flex;
+  gap: 24px;
+}
+.drag-card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 28px 36px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-top: 3px solid var(--hairline);
+  border-radius: 2px;
   cursor: grab;
 }
 .drag-card .grip {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   flex-shrink: 0;
 }
 .drag-card .grip span {
   display: block;
-  width: 14px;
+  width: 18px;
   height: 2px;
   background: var(--grey-mid);
   border-radius: 1px;
 }
+.drag-card .card-text {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1.4;
+}
+
+/* Validate */
+.validate-row {
+  position: absolute;
+  bottom: 100px;
+  right: 96px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 5;
+}
+.validate-hint {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.25);
+  font-style: italic;
+}
 .validate-btn {
-  margin-left: auto;
-  padding: 10px 28px;
+  padding: 16px 48px;
   background: transparent;
-  border: 1px solid rgba(220,25,36,0.3);
-  color: rgba(220,25,36,0.4);
+  border: 1px solid rgba(220,25,36,0.35);
+  color: rgba(220,25,36,0.45);
   font-family: 'Triumph Brokman', sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.20em;
   text-transform: uppercase;
   border-radius: 2px;
   cursor: not-allowed;
 }
-.validate-btn .hint {
-  display: block;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: none;
-  color: rgba(220,25,36,0.3);
-  margin-top: 2px;
-  text-align: center;
-}
-
-/* Locked rows */
-.t-locked {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.locked-row {
-  flex: 1;
-  border: 1px solid var(--hairline);
-  border-bottom: none;
-  opacity: 0.3;
-}
-.locked-row:last-child { border-bottom: 1px solid var(--hairline); }
-.locked-row .fcell {
-  height: 100%;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--grey-mid);
-  border-right: 1px solid var(--hairline);
-}
-.locked-row .lcell {
-  height: 100%;
-  border-right: 1px solid var(--hairline);
-  background: repeating-linear-gradient(
-    135deg,
-    transparent 0px, transparent 5px,
-    rgba(255,255,255,0.015) 5px, rgba(255,255,255,0.015) 6px
-  );
-}
-.locked-row .lcell:last-child { border-right: none; }
 </style>
 </head>
 <body>
@@ -264,64 +267,58 @@ html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--
   <div class="eyebrow">/////</div>
   <div class="title"><h1>Feature<br><span class="red">comparison.</span></h1></div>
 
+  <!-- Progress indicator -->
+  <div class="progress">
+    <span class="label">1 of 8</span>
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <!-- Photo placeholders -->
   <div class="photos">
     <div class="photo-box">Key ignition system — photo</div>
     <div class="photo-box">Keyless ignition system — photo</div>
   </div>
 
-  <div class="table-block">
-    <!-- Header -->
-    <div class="t-header grid3">
-      <div class="hcell">Feature</div>
-      <div class="hcell">Key Ignition System</div>
-      <div class="hcell kl">Keyless Ignition System</div>
-    </div>
+  <!-- Column headers -->
+  <div class="col-header">
+    <div class="hcell">Feature</div>
+    <div class="hcell">Key Ignition System</div>
+    <div class="hcell kl">Keyless Ignition System</div>
+  </div>
 
-    <!-- Active row — Authentication Method -->
-    <div class="t-active grid3">
-      <div class="fcell">Authentication Method</div>
-      <div class="drop-zone"><div class="drop-inner">Drop here</div></div>
-      <div class="drop-zone"><div class="drop-inner">Drop here</div></div>
-    </div>
+  <!-- Active row -->
+  <div class="question-row">
+    <div class="feature-label">Authentication Method</div>
+    <div class="drop-zone"><div class="drop-inner">Drop here</div></div>
+    <div class="drop-zone"><div class="drop-inner">Drop here</div></div>
+  </div>
 
-    <!-- Card tray -->
-    <div class="t-tray">
-      <span class="tray-label">Drag to match →</span>
+  <!-- Drag cards -->
+  <div class="card-tray">
+    <span class="tray-label">Drag to the correct column ↑</span>
+    <div class="cards">
       <div class="drag-card">
         <div class="grip"><span></span><span></span><span></span></div>
-        Physical RFID key detection
+        <span class="card-text">Physical RFID key detection</span>
       </div>
       <div class="drag-card">
         <div class="grip"><span></span><span></span><span></span></div>
-        Proximity-based encrypted fob communication
+        <span class="card-text">Proximity-based encrypted fob communication</span>
       </div>
-      <button class="validate-btn">Validate<span class="hint">Place both cards first</span></button>
     </div>
+  </div>
 
-    <!-- Locked rows -->
-    <div class="t-locked">
-      <div class="locked-row grid3">
-        <div class="fcell">Security</div><div class="lcell"></div><div class="lcell"></div>
-      </div>
-      <div class="locked-row grid3">
-        <div class="fcell">Complexity of Use</div><div class="lcell"></div><div class="lcell"></div>
-      </div>
-      <div class="locked-row grid3">
-        <div class="fcell">Reliability</div><div class="lcell"></div><div class="lcell"></div>
-      </div>
-      <div class="locked-row grid3">
-        <div class="fcell">Convenience</div><div class="lcell"></div><div class="lcell"></div>
-      </div>
-      <div class="locked-row grid3">
-        <div class="fcell">Vulnerability to Theft</div><div class="lcell"></div><div class="lcell"></div>
-      </div>
-      <div class="locked-row grid3">
-        <div class="fcell">Cost</div><div class="lcell"></div><div class="lcell"></div>
-      </div>
-      <div class="locked-row grid3">
-        <div class="fcell">Maintenance</div><div class="lcell"></div><div class="lcell"></div>
-      </div>
-    </div>
+  <!-- Validate -->
+  <div class="validate-row">
+    <span class="validate-hint">Place both cards to continue</span>
+    <button class="validate-btn">Validate</button>
   </div>
 
   <div class="foot">Triumph · Technician Training</div>
