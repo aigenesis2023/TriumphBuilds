@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 27 — Read stored DTC's + Configure (Read DTC's tab active)</title>
+<style>
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Medium.otf') format('opentype'); font-weight: 500; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-DemiBold.otf') format('opentype'); font-weight: 600; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-ExtraBold.otf') format('opentype'); font-weight: 800; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Black.otf') format('opentype'); font-weight: 900; }
+:root {
+  --bg: #050508; --surface: #111114; --surface-2: #16161B;
+  --hairline: #2A2A30; --grey-mid: #9090A0; --grey-hi: #D0D0DA;
+  --white: #FFFFFF; --red: #DC1924; --green: #00C853; --amber: #F5C400;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--white); font-family: 'Triumph Brokman', sans-serif; overflow: hidden; -webkit-font-smoothing: antialiased; }
+.slide { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.bg { position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 800px 600px at 8% 10%, rgba(220, 25, 36, 0.24) 0%, transparent 55%),
+    radial-gradient(ellipse 700px 600px at 95% 90%, rgba(10, 10, 20, 0.9) 0%, transparent 55%),
+    linear-gradient(135deg, #0A0A12 0%, #050508 55%, #08080B 100%); }
+.bg::before { content: ""; position: absolute; top: -300px; left: -400px; width: 1600px; height: 900px;
+  background: linear-gradient(105deg, transparent 0%, transparent 30%, rgba(220, 25, 36, 0.16) 45%, rgba(255, 100, 110, 0.22) 50%, rgba(220, 25, 36, 0.12) 60%, transparent 75%);
+  transform: rotate(-12deg); filter: blur(60px); opacity: 0.85; }
+.bg::after { content: ""; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(108deg, transparent 0px, transparent 95px, rgba(255,255,255,0.010) 95px, rgba(255,255,255,0.010) 96px); }
+
+.cm { position: absolute; width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.55); z-index: 5; }
+.cm.tl { top: 28px; left: 28px; border-right: none; border-bottom: none; }
+.cm.tr { top: 28px; right: 28px; border-left: none; border-bottom: none; }
+.cm.bl { bottom: 28px; left: 28px; border-right: none; border-top: none; }
+.cm.br { bottom: 28px; right: 28px; border-left: none; border-top: none; }
+
+.brand { position: absolute; top: 70px; left: 96px; display: flex; align-items: center; gap: 14px; z-index: 10; }
+.brand .word { font-weight: 800; font-size: 28px; letter-spacing: 0.04em; }
+.brand .tri { width: 26px; height: 26px; position: relative; }
+.brand .tri::before { content: ""; position: absolute; inset: 0; background: var(--white); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+.brand .tri::after { content: ""; position: absolute; top: 35%; left: 35%; width: 30%; height: 50%; background: var(--bg); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+
+.page { position: absolute; top: 70px; right: 96px; font-size: 16px; color: var(--grey-mid); letter-spacing: 0.10em; font-weight: 500; z-index: 10; }
+.page .cur { color: var(--white); font-weight: 800; }
+.page .dim { color: rgba(255,255,255,0.25); margin: 0 8px; }
+
+.eyebrow { position: absolute; top: 128px; left: 96px; font-weight: 900; font-size: 26px; letter-spacing: -0.04em; color: var(--red); line-height: 0.8; z-index: 5; }
+
+.title { position: absolute; top: 160px; left: 96px; right: 480px; z-index: 5; }
+.title h1 { font-weight: 900; font-size: 60px; line-height: 0.96; letter-spacing: 0.005em; text-transform: uppercase; }
+.title h1 .red { color: var(--red); }
+
+/* Model badge top-right */
+.model-tag {
+  position: absolute; top: 188px; right: 96px; z-index: 5;
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 14px 20px;
+  background: rgba(0, 200, 83, 0.10);
+  border: 1px solid rgba(0, 200, 83, 0.45);
+}
+.model-tag .dot { width: 10px; height: 10px; background: var(--green); border-radius: 50%; }
+.model-tag .col-mt { display: flex; flex-direction: column; }
+.model-tag .l { font-weight: 600; font-size: 10px; letter-spacing: 0.20em; color: var(--grey-mid); text-transform: uppercase; }
+.model-tag .t { font-weight: 800; font-size: 13px; letter-spacing: 0.10em; color: var(--white); text-transform: uppercase; margin-top: 2px; }
+
+/* Tab strip */
+.tabs {
+  position: absolute; top: 320px; left: 96px; right: 96px; z-index: 5;
+  display: flex; gap: 0; border-bottom: 1px solid var(--hairline);
+}
+.tab {
+  flex: 1; padding: 18px 28px;
+  background: transparent; border: 1px solid var(--hairline); border-bottom: none;
+  display: flex; align-items: center; gap: 14px;
+  cursor: pointer;
+}
+.tab .n { font-weight: 900; font-size: 18px; color: var(--grey-mid); font-variant-numeric: tabular-nums; }
+.tab .t { font-weight: 800; font-size: 22px; letter-spacing: 0.01em; text-transform: uppercase; color: var(--grey-mid); }
+.tab.active {
+  background: rgba(220, 25, 36, 0.08); border-color: var(--red); border-bottom: none;
+  position: relative;
+}
+.tab.active::after { content: ""; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: var(--bg); }
+.tab.active .n { color: var(--red); }
+.tab.active .t { color: var(--white); }
+.tab + .tab { border-left: none; }
+
+/* Active tab content area */
+.tab-content {
+  position: absolute; top: 410px; left: 96px; right: 96px; bottom: 150px; z-index: 5;
+  display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 36px;
+}
+
+.body-col {
+  background: rgba(8, 8, 12, 0.55); border: 1px solid var(--hairline);
+  padding: 32px 36px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.body-col p { font-weight: 400; font-size: 19px; line-height: 1.55; color: var(--grey-hi); }
+.body-col p strong { color: var(--white); font-weight: 700; }
+
+/* TDT Screen frame */
+.screen-col {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.screen-frame {
+  flex: 1;
+  background: var(--surface); border: 1px solid var(--hairline);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.screen-frame .head {
+  padding: 14px 22px; background: var(--surface-2); border-bottom: 1px solid var(--hairline);
+  display: flex; align-items: center; gap: 10px;
+}
+.screen-frame .head .dot { width: 10px; height: 10px; background: var(--green); border-radius: 50%; }
+.screen-frame .head .label {
+  font-weight: 700; font-size: 12px; letter-spacing: 0.18em; color: var(--white); text-transform: uppercase;
+}
+.screen-frame .head .meta {
+  margin-left: auto; font-weight: 600; font-size: 11px; letter-spacing: 0.14em; color: var(--grey-mid); text-transform: uppercase;
+}
+.screen-frame .body-screen {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.screen-frame .placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  border: 1px dashed rgba(255,255,255,0.15);
+  font-weight: 600; font-size: 12px; letter-spacing: 0.18em; color: rgba(255,255,255,0.30); text-transform: uppercase;
+  text-align: center;
+}
+.screen-frame .placeholder .icon {
+  font-weight: 900; font-size: 36px; color: rgba(255,255,255,0.20);
+}
+
+.foot { position: absolute; bottom: 50px; left: 96px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; }
+.foot-note { position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; font-style: italic; font-weight: 500; }
+.next { position: absolute; bottom: 40px; right: 96px; width: 64px; height: 64px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); font-weight: 600; z-index: 10; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="bg"></div>
+  <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span><span class="cm br"></span>
+
+  <div class="brand"><span class="word">TRIUMPH</span><span class="tri"></span></div>
+  <div class="page"><span class="cur">27</span><span class="dim">—</span><span>30</span></div>
+
+  <div class="eyebrow">/////</div>
+  <div class="title"><h1>Read stored DTC's <span class="red">+ configure.</span></h1></div>
+
+  <div class="model-tag">
+    <span class="dot"></span>
+    <div class="col-mt">
+      <span class="l">Applies to</span>
+      <span class="t">Key Models Only (Not 400cc)</span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active">
+      <span class="n">01</span>
+      <span class="t">Read DTC's</span>
+    </div>
+    <div class="tab">
+      <span class="n">02</span>
+      <span class="t">Configure — Pairing System Components</span>
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <div class="body-col">
+      <p>A <strong>very useful information source for technicians</strong>. Listing both a <strong>code and description</strong> for the stored DTC.</p>
+      <p>Refer to the relevant <strong>Triumph service manual</strong> for additional information on individual DTCs and for <strong>pinpoint tests</strong> to fully diagnose and repair the fault.</p>
+      <p>For <strong>supported / more recent models</strong>, the DTC can <strong>link directly to the relevant pin point check</strong> within the service manual for much faster diagnostics.</p>
+    </div>
+
+    <div class="screen-col">
+      <div class="screen-frame">
+        <div class="head">
+          <span class="dot"></span><span class="label">Triumph Diagnostic Tool</span><span class="meta">Example 1 — Tech Bulletin 255</span>
+        </div>
+        <div class="body-screen">
+          <div class="placeholder"><span class="icon">▦</span><span>Read DTC's<br>Example screen 1</span></div>
+        </div>
+      </div>
+      <div class="screen-frame">
+        <div class="head">
+          <span class="dot"></span><span class="label">Triumph Diagnostic Tool</span><span class="meta">Example 2 — Tech Bulletin 255</span>
+        </div>
+        <div class="body-screen">
+          <div class="placeholder"><span class="icon">▦</span><span>Read DTC's<br>Example screen 2</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">Triumph · Technician Training</div>
+  <div class="foot-note">Show example screen using Tech Bulletin 255</div>
+  <div class="next">›</div>
+</div>
+</body>
+</html>

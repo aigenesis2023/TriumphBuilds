@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 19 — Keyless Ignition-On Process</title>
+<style>
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Medium.otf') format('opentype'); font-weight: 500; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-DemiBold.otf') format('opentype'); font-weight: 600; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-ExtraBold.otf') format('opentype'); font-weight: 800; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Black.otf') format('opentype'); font-weight: 900; }
+:root {
+  --bg: #050508; --surface: #111114; --surface-2: #16161B;
+  --hairline: #2A2A30; --grey-mid: #9090A0; --grey-hi: #D0D0DA;
+  --white: #FFFFFF; --red: #DC1924; --green: #00C853; --amber: #F5C400;
+  --blue: #3B9EFF;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--white); font-family: 'Triumph Brokman', sans-serif; overflow: hidden; -webkit-font-smoothing: antialiased; }
+.slide { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.bg { position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 800px 600px at 8% 10%, rgba(220, 25, 36, 0.26) 0%, transparent 55%),
+    radial-gradient(ellipse 700px 600px at 95% 90%, rgba(10, 10, 20, 0.9) 0%, transparent 55%),
+    linear-gradient(135deg, #0A0A12 0%, #050508 55%, #08080B 100%); }
+.bg::before { content: ""; position: absolute; top: -300px; left: -400px; width: 1600px; height: 900px;
+  background: linear-gradient(105deg, transparent 0%, transparent 30%, rgba(220, 25, 36, 0.18) 45%, rgba(255, 100, 110, 0.24) 50%, rgba(220, 25, 36, 0.14) 60%, transparent 75%);
+  transform: rotate(-12deg); filter: blur(60px); opacity: 0.85; }
+.bg::after { content: ""; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(108deg, transparent 0px, transparent 95px, rgba(255,255,255,0.010) 95px, rgba(255,255,255,0.010) 96px); }
+
+.cm { position: absolute; width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.55); z-index: 5; }
+.cm.tl { top: 28px; left: 28px; border-right: none; border-bottom: none; }
+.cm.tr { top: 28px; right: 28px; border-left: none; border-bottom: none; }
+.cm.bl { bottom: 28px; left: 28px; border-right: none; border-top: none; }
+.cm.br { bottom: 28px; right: 28px; border-left: none; border-top: none; }
+
+.brand { position: absolute; top: 70px; left: 96px; display: flex; align-items: center; gap: 14px; z-index: 10; }
+.brand .word { font-weight: 800; font-size: 28px; letter-spacing: 0.04em; }
+.brand .tri { width: 26px; height: 26px; position: relative; }
+.brand .tri::before { content: ""; position: absolute; inset: 0; background: var(--white); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+.brand .tri::after { content: ""; position: absolute; top: 35%; left: 35%; width: 30%; height: 50%; background: var(--bg); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+
+.page { position: absolute; top: 70px; right: 96px; font-size: 16px; color: var(--grey-mid); letter-spacing: 0.10em; font-weight: 500; z-index: 10; }
+.page .cur { color: var(--white); font-weight: 800; }
+.page .dim { color: rgba(255,255,255,0.25); margin: 0 8px; }
+
+.eyebrow { position: absolute; top: 138px; left: 96px; font-weight: 900; font-size: 30px; letter-spacing: -0.04em; color: var(--red); line-height: 0.8; z-index: 5; }
+.title { position: absolute; top: 180px; left: 96px; z-index: 5; }
+.title h1 { font-weight: 900; font-size: 76px; line-height: 0.94; letter-spacing: 0.005em; text-transform: uppercase; }
+.title h1 .red { color: var(--red); display: block; }
+
+/* Legend */
+.legend {
+  position: absolute; top: 200px; right: 96px;
+  display: flex; flex-direction: column; gap: 10px; z-index: 5;
+}
+.lg-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 18px;
+  background: var(--surface); border: 1px solid var(--hairline);
+  font-weight: 700; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.lg-item .sw {
+  width: 18px; height: 18px; flex-shrink: 0;
+}
+.lg-item.perceived .sw { background: var(--amber); }
+.lg-item.actual .sw { background: var(--blue); }
+.lg-item .l { color: var(--grey-mid); }
+.lg-item .v { color: var(--white); margin-left: 4px; }
+
+.sub {
+  position: absolute; top: 370px; left: 96px;
+  font-weight: 700; font-size: 18px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--grey-hi);
+  display: flex; align-items: center; gap: 18px;
+  z-index: 5;
+}
+.sub::before { content: ""; display: inline-block; width: 56px; height: 2px; background: var(--red); }
+
+/* Flowchart */
+.flow {
+  position: absolute; top: 420px; left: 96px; right: 96px; bottom: 110px;
+  display: flex; flex-direction: column; gap: 12px; z-index: 5;
+}
+.phase {
+  display: grid; grid-template-columns: 260px 1fr; gap: 0;
+  background: rgba(8, 8, 12, 0.55); border: 1px solid var(--hairline);
+  overflow: hidden;
+}
+.phase.f1 { flex: 3.4 1 0; }
+.phase.f2 { flex: 2.8 1 0; }
+.phase.f3 { flex: 1.4 1 0; min-height: 100px; }
+
+.phase .state {
+  background: linear-gradient(135deg, rgba(245, 196, 0, 0.22) 0%, rgba(245, 196, 0, 0.10) 100%);
+  border-right: 4px solid var(--amber);
+  padding: 18px 24px;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 6px;
+}
+.phase .state .perceived-tag {
+  font-weight: 700; font-size: 10px; letter-spacing: 0.22em; color: var(--amber); text-transform: uppercase;
+}
+.phase .state .state-label {
+  font-weight: 900; font-size: 32px; line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; color: var(--white);
+}
+.phase.f3 .state .state-label { font-size: 26px; }
+
+.phase .steps {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 10px 28px;
+}
+.phase .step {
+  display: grid; grid-template-columns: 38px 1fr; gap: 12px;
+  padding: 6px 0; align-items: start;
+}
+.phase .step + .step { border-top: 1px solid rgba(59, 158, 255, 0.12); }
+.phase .step .n {
+  font-weight: 900; font-size: 18px; color: var(--blue);
+  line-height: 1.3; font-variant-numeric: tabular-nums;
+}
+.phase .step .t {
+  font-weight: 500; font-size: 15px; line-height: 1.4; color: var(--grey-hi);
+}
+.phase .step .t strong { color: var(--white); font-weight: 700; }
+
+.foot { position: absolute; bottom: 50px; left: 96px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; }
+.next { position: absolute; bottom: 40px; right: 96px; width: 64px; height: 64px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); font-weight: 600; z-index: 10; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="bg"></div>
+  <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span><span class="cm br"></span>
+
+  <div class="brand"><span class="word">TRIUMPH</span><span class="tri"></span></div>
+  <div class="page"><span class="cur">19</span><span class="dim">—</span><span>25</span></div>
+
+  <div class="eyebrow">/////</div>
+  <div class="title"><h1>Example — keyless system<br><span class="red">ignition-on process.</span></h1></div>
+
+  <div class="legend">
+    <div class="lg-item perceived"><span class="sw"></span><span class="l">Yellow —</span><span class="v">What customer perceives as being the state of bike</span></div>
+    <div class="lg-item actual"><span class="sw"></span><span class="l">Blue —</span><span class="v">Actual state of bike</span></div>
+  </div>
+
+  <div class="sub">Step-by-step ignition-on flow with perceived vs actual state mapping</div>
+
+  <div class="flow">
+    <div class="phase f1">
+      <div class="state">
+        <div class="perceived-tag">Perceived state</div>
+        <div class="state-label">Bike is "Off"</div>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">01</span><span class="t">User presses either "power" or "start" button</span></div>
+        <div class="step"><span class="n">02</span><span class="t">Keyless control unit (KCU) wakes up</span></div>
+        <div class="step"><span class="n">03</span><span class="t">KCU checks for recognised key being available and for matching ESL identification.</span></div>
+        <div class="step"><span class="n">04</span><span class="t">If the KCU finds a recognised key and confirms the ESL identification, it will apply power to the "12v ignition" input to all other components</span></div>
+      </div>
+    </div>
+
+    <div class="phase f2">
+      <div class="state">
+        <div class="perceived-tag">Perceived state</div>
+        <div class="state-label">Bike is "On"</div>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">05</span><span class="t">All other components wake up simultaneously, except ECU which will only wake up if the kill switch is in the "run" position</span></div>
+        <div class="step"><span class="n">06</span><span class="t">When ECU wakes, it queries key authentication state from KCU (KCU responds key is authenticated)</span></div>
+        <div class="step"><span class="n">07</span><span class="t">ECU and KCU then exchange security keys as final step of immobiliser functionality</span></div>
+      </div>
+    </div>
+
+    <div class="phase f3">
+      <div class="state">
+        <div class="perceived-tag">Perceived state</div>
+        <div class="state-label">Bike can start</div>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">08</span><span class="t">If ECU-KCU exchange is OK, engine can be started.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">Triumph · Technician Training</div>
+  <div class="next">›</div>
+</div>
+</body>
+</html>

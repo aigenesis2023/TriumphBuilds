@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 16 — Smart Key Battery (CR2032)</title>
+<style>
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Medium.otf') format('opentype'); font-weight: 500; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-DemiBold.otf') format('opentype'); font-weight: 600; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-ExtraBold.otf') format('opentype'); font-weight: 800; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Black.otf') format('opentype'); font-weight: 900; }
+:root {
+  --bg: #050508; --surface: #111114; --surface-2: #16161B;
+  --hairline: #2A2A30; --grey-mid: #9090A0; --grey-hi: #D0D0DA;
+  --white: #FFFFFF; --red: #DC1924; --green: #00C853; --amber: #F5C400;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--white); font-family: 'Triumph Brokman', sans-serif; overflow: hidden; -webkit-font-smoothing: antialiased; }
+.slide { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.bg { position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 800px 600px at 8% 10%, rgba(220, 25, 36, 0.28) 0%, transparent 55%),
+    radial-gradient(ellipse 700px 600px at 95% 90%, rgba(10, 10, 20, 0.9) 0%, transparent 55%),
+    linear-gradient(135deg, #0A0A12 0%, #050508 55%, #08080B 100%); }
+.bg::before { content: ""; position: absolute; top: -300px; left: -400px; width: 1600px; height: 900px;
+  background: linear-gradient(105deg, transparent 0%, transparent 30%, rgba(220, 25, 36, 0.20) 45%, rgba(255, 100, 110, 0.26) 50%, rgba(220, 25, 36, 0.14) 60%, transparent 75%);
+  transform: rotate(-12deg); filter: blur(60px); opacity: 0.85; }
+.bg::after { content: ""; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(108deg, transparent 0px, transparent 95px, rgba(255,255,255,0.010) 95px, rgba(255,255,255,0.010) 96px); }
+
+.cm { position: absolute; width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.55); z-index: 5; }
+.cm.tl { top: 28px; left: 28px; border-right: none; border-bottom: none; }
+.cm.tr { top: 28px; right: 28px; border-left: none; border-bottom: none; }
+.cm.bl { bottom: 28px; left: 28px; border-right: none; border-top: none; }
+.cm.br { bottom: 28px; right: 28px; border-left: none; border-top: none; }
+
+.brand { position: absolute; top: 70px; left: 96px; display: flex; align-items: center; gap: 14px; z-index: 10; }
+.brand .word { font-weight: 800; font-size: 28px; letter-spacing: 0.04em; }
+.brand .tri { width: 26px; height: 26px; position: relative; }
+.brand .tri::before { content: ""; position: absolute; inset: 0; background: var(--white); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+.brand .tri::after { content: ""; position: absolute; top: 35%; left: 35%; width: 30%; height: 50%; background: var(--bg); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+
+.page { position: absolute; top: 70px; right: 96px; font-size: 16px; color: var(--grey-mid); letter-spacing: 0.10em; font-weight: 500; z-index: 10; }
+.page .cur { color: var(--white); font-weight: 800; }
+.page .dim { color: rgba(255,255,255,0.25); margin: 0 8px; }
+
+.eyebrow { position: absolute; top: 150px; left: 96px; font-weight: 900; font-size: 32px; letter-spacing: -0.04em; color: var(--red); line-height: 0.8; z-index: 5; }
+.title { position: absolute; top: 195px; left: 96px; z-index: 5; }
+.title h1 { font-weight: 900; font-size: 92px; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
+.title h1 .red { color: var(--red); display: block; }
+
+.spec-pill {
+  position: absolute; top: 220px; right: 96px;
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 18px 28px;
+  background: rgba(220, 25, 36, 0.10);
+  border: 1px solid rgba(220, 25, 36, 0.50);
+  z-index: 5;
+}
+.spec-pill .dot { width: 10px; height: 10px; background: var(--red); border-radius: 50%; }
+.spec-pill .text {
+  font-weight: 800; font-size: 16px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--white);
+}
+.spec-pill .text .red { color: var(--red); }
+
+.sub {
+  position: absolute; top: 410px; left: 96px;
+  font-weight: 700; font-size: 18px; letter-spacing: 0.20em;
+  text-transform: uppercase; color: var(--grey-hi);
+  display: flex; align-items: center; gap: 18px;
+  z-index: 5;
+}
+.sub::before { content: ""; display: inline-block; width: 56px; height: 2px; background: var(--red); }
+
+/* Main area */
+.main {
+  position: absolute; top: 460px; left: 96px; right: 96px; bottom: 230px;
+  display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 56px; z-index: 5;
+}
+
+/* Image stack — battery + fob */
+.imgstack { display: grid; grid-template-rows: 1.4fr 1fr; gap: 18px; min-height: 0; }
+.card {
+  background: var(--surface); border: 1px solid var(--hairline);
+  display: flex; flex-direction: column; overflow: hidden; min-height: 0;
+}
+.card .imgwrap {
+  flex: 1; min-height: 0; position: relative;
+  background-color: var(--surface);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.card .imgwrap::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 400px 300px at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 70%);
+}
+.card.battery .imgwrap { background-image: url('../assets/cr2032-battery.png'); background-size: 50% auto; }
+.card.fob .imgwrap { background-image: url('../assets/smart-fob.png'); background-size: 55% auto; }
+.card .cap {
+  background: var(--surface-2); border-top: 1px solid var(--hairline);
+  padding: 14px 22px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.card .cap .l { display: flex; flex-direction: column; gap: 4px; }
+.card .cap .t {
+  font-weight: 800; font-size: 17px; letter-spacing: 0.02em;
+  color: var(--white); text-transform: uppercase;
+}
+.card .cap .s {
+  font-weight: 500; font-size: 12px; color: var(--grey-mid);
+  letter-spacing: 0.06em;
+}
+.card .cap .brand-tag {
+  font-weight: 800; font-size: 11px; letter-spacing: 0.20em;
+  color: var(--red); text-transform: uppercase;
+  padding: 6px 12px; border: 1px solid rgba(220, 25, 36, 0.5);
+}
+
+/* Facts list */
+.facts { display: flex; flex-direction: column; justify-content: space-between; gap: 12px; }
+.fact {
+  display: grid; grid-template-columns: 50px 1fr; gap: 18px;
+  padding: 14px 0; border-top: 1px solid var(--hairline);
+  align-items: start;
+}
+.fact:first-child { border-top: none; padding-top: 0; }
+.fact .n {
+  font-weight: 900; font-size: 26px; color: var(--red);
+  line-height: 1.1; font-variant-numeric: tabular-nums;
+}
+.fact h3 {
+  font-weight: 800; font-size: 19px; line-height: 1.1;
+  letter-spacing: 0.01em; text-transform: uppercase; color: var(--white);
+  margin-bottom: 6px;
+}
+.fact p {
+  font-weight: 500; font-size: 16px; line-height: 1.45; color: var(--grey-hi);
+}
+.fact p strong { color: var(--white); font-weight: 700; }
+
+/* Important callout */
+.important {
+  position: absolute; left: 96px; right: 96px; bottom: 120px;
+  padding: 22px 32px; background: rgba(245, 196, 0, 0.06);
+  border: 1px solid rgba(245, 196, 0, 0.35); border-left: 4px solid var(--amber);
+  display: flex; align-items: center; gap: 24px; z-index: 5; }
+.important .badge { font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: var(--amber); text-transform: uppercase; flex-shrink: 0; }
+.important .body { font-weight: 500; font-size: 16px; line-height: 1.5; color: var(--grey-hi); }
+.important .body strong { color: var(--white); font-weight: 700; }
+
+.foot { position: absolute; bottom: 50px; left: 96px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; }
+.next { position: absolute; bottom: 40px; right: 96px; width: 64px; height: 64px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); font-weight: 600; z-index: 10; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="bg"></div>
+  <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span><span class="cm br"></span>
+
+  <div class="brand"><span class="word">TRIUMPH</span><span class="tri"></span></div>
+  <div class="page"><span class="cur">16</span><span class="dim">—</span><span>20</span></div>
+
+  <div class="eyebrow">/////</div>
+  <div class="title"><h1>Smart Key<br><span class="red">battery.</span></h1></div>
+
+  <div class="spec-pill">
+    <span class="dot"></span>
+    <span class="text">CR<span class="red">2032</span> · 3V LITHIUM</span>
+  </div>
+
+  <div class="sub">Annual service item · Replace with a premium-brand cell</div>
+
+  <div class="main">
+    <div class="imgstack">
+      <div class="card battery">
+        <div class="imgwrap" role="img" aria-label="CR2032 3V lithium coin cell"></div>
+        <div class="cap">
+          <div class="l">
+            <div class="t">CR2032 · 3V Lithium</div>
+            <div class="s">Smart key coin cell</div>
+          </div>
+          <div class="brand-tag">Duracell</div>
+        </div>
+      </div>
+      <div class="card fob">
+        <div class="imgwrap" role="img" aria-label="Triumph smart key fob"></div>
+        <div class="cap">
+          <div class="l">
+            <div class="t">Smart Key</div>
+            <div class="s">Houses the CR2032 cell</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="facts">
+      <div class="fact">
+        <div class="n">01</div>
+        <div>
+          <h3>High-Quality Battery</h3>
+          <p>It is important that a <strong>high quality lithium CR2032</strong> battery is fitted.</p>
+        </div>
+      </div>
+      <div class="fact">
+        <div class="n">02</div>
+        <div>
+          <h3>Recommended Brand</h3>
+          <p>Triumph recommends <strong>Duracell</strong>. Any similar <strong>high-quality branded battery</strong> is acceptable where Duracell is not available.</p>
+        </div>
+      </div>
+      <div class="fact">
+        <div class="n">03</div>
+        <div>
+          <h3>Why It Matters</h3>
+          <p>Premium brands help ensure <strong>quality, performance and battery-size accuracy</strong>.</p>
+        </div>
+      </div>
+      <div class="fact">
+        <div class="n">04</div>
+        <div>
+          <h3>Low-Quality Cells</h3>
+          <p>Some low-quality batteries are <strong>slightly smaller in size</strong> — connection and therefore reliability is affected.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="important">
+    <div class="badge">! Important</div>
+    <div class="body"><strong>Annual service item</strong> to replace the battery. <strong>Possible to measure battery voltage</strong> using a multi-meter.</div>
+  </div>
+
+  <div class="foot">Triumph · Technician Training</div>
+  <div class="next">›</div>
+</div>
+</body>
+</html>

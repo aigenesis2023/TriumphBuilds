@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 08 — Supported ECM Types</title>
+<style>
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Thin.otf') format('opentype'); font-weight: 100; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Light.otf') format('opentype'); font-weight: 300; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Medium.otf') format('opentype'); font-weight: 500; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-DemiBold.otf') format('opentype'); font-weight: 600; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-ExtraBold.otf') format('opentype'); font-weight: 800; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Heavy.otf') format('opentype'); font-weight: 850; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Black.otf') format('opentype'); font-weight: 900; }
+
+:root {
+  --bg: #050508;
+  --surface: #111114;
+  --surface-2: #16161B;
+  --hairline: #2A2A30;
+  --grey-mid: #9090A0;
+  --grey-hi: #D0D0DA;
+  --white: #FFFFFF;
+  --red: #DC1924;
+  --amber: #F5C400;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--white); font-family: 'Triumph Brokman', sans-serif; overflow: hidden; -webkit-font-smoothing: antialiased; }
+.slide { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+
+.bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 800px 600px at 8% 10%, rgba(220, 25, 36, 0.30) 0%, transparent 55%),
+    radial-gradient(ellipse 700px 600px at 95% 90%, rgba(10, 10, 20, 0.9) 0%, transparent 55%),
+    linear-gradient(135deg, #0A0A12 0%, #050508 55%, #08080B 100%);
+}
+.bg::before {
+  content: ""; position: absolute; top: -300px; left: -400px;
+  width: 1600px; height: 900px;
+  background: linear-gradient(105deg, transparent 0%, transparent 30%, rgba(220, 25, 36, 0.20) 45%, rgba(255, 100, 110, 0.28) 50%, rgba(220, 25, 36, 0.16) 60%, transparent 75%);
+  transform: rotate(-12deg); filter: blur(60px); opacity: 0.85;
+}
+.bg::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(108deg, transparent 0px, transparent 95px, rgba(255,255,255,0.010) 95px, rgba(255,255,255,0.010) 96px);
+}
+
+.cm { position: absolute; width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.55); z-index: 5; }
+.cm.tl { top: 28px; left: 28px; border-right: none; border-bottom: none; }
+.cm.tr { top: 28px; right: 28px; border-left: none; border-bottom: none; }
+.cm.bl { bottom: 28px; left: 28px; border-right: none; border-top: none; }
+.cm.br { bottom: 28px; right: 28px; border-left: none; border-top: none; }
+
+.brand { position: absolute; top: 70px; left: 96px; display: flex; align-items: center; gap: 14px; z-index: 10; }
+.brand .word { font-family: 'Triumph Brokman'; font-weight: 800; font-size: 28px; letter-spacing: 0.04em; }
+.brand .tri { width: 26px; height: 26px; position: relative; }
+.brand .tri::before { content: ""; position: absolute; inset: 0; background: var(--white); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+.brand .tri::after { content: ""; position: absolute; top: 35%; left: 35%; width: 30%; height: 50%; background: var(--bg); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+
+.page { position: absolute; top: 70px; right: 96px; font-size: 16px; color: var(--grey-mid); letter-spacing: 0.10em; font-weight: 500; z-index: 10; }
+.page .cur { color: var(--white); font-weight: 800; }
+.page .dim { color: rgba(255,255,255,0.25); margin: 0 8px; }
+
+.eyebrow { position: absolute; top: 150px; left: 96px; font-family: 'Triumph Brokman'; font-weight: 900; font-size: 32px; letter-spacing: -0.04em; color: var(--red); line-height: 0.8; z-index: 5; }
+
+.title { position: absolute; top: 195px; left: 96px; z-index: 5; }
+.title h1 { font-family: 'Triumph Brokman'; font-weight: 900; font-size: 90px; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
+.title h1 .red { color: var(--red); display: block; }
+.title .sub { margin-top: 24px; font-family: 'Triumph Brokman'; font-weight: 700; font-size: 20px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-hi); display: flex; align-items: center; gap: 18px; }
+.title .sub::before { content: ""; display: inline-block; width: 56px; height: 2px; background: var(--red); }
+
+/* Two-section grid (Immobiliser | TPMS) */
+.groups { position: absolute; top: 470px; left: 96px; right: 96px; bottom: 130px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; z-index: 5; }
+.group { display: flex; flex-direction: column; }
+.group-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 18px; margin-bottom: 22px;
+  border-bottom: 1px solid var(--hairline);
+}
+.group-head .label {
+  font-family: 'Triumph Brokman'; font-weight: 800; font-size: 28px;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--white);
+}
+.group-head .label .num {
+  display: inline-block; color: var(--red); font-weight: 900; font-size: 16px;
+  letter-spacing: 0.20em; margin-right: 16px; vertical-align: 5px;
+}
+.group-head .meta {
+  font-family: 'Triumph Brokman'; font-weight: 600; font-size: 13px;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-mid);
+}
+
+.cards { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.card {
+  background: var(--surface); border: 1px solid var(--hairline);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.card .imgwrap {
+  flex: 1; background: linear-gradient(160deg, #1A1A20 0%, #0F0F14 100%);
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.card .imgwrap .placeholder {
+  font-family: 'Triumph Brokman'; font-weight: 600; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.20);
+}
+.card .imgwrap::before {
+  content: ""; position: absolute; top: 14px; right: 14px;
+  width: 22px; height: 22px;
+  border-top: 1px solid rgba(255,255,255,0.18); border-right: 1px solid rgba(255,255,255,0.18);
+}
+.card .imgwrap::after {
+  content: ""; position: absolute; bottom: 14px; left: 14px;
+  width: 22px; height: 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.18); border-left: 1px solid rgba(255,255,255,0.18);
+}
+.card .label {
+  background: var(--surface-2); padding: 18px 22px;
+  border-top: 1px solid var(--hairline);
+}
+.card .label .name {
+  font-family: 'Triumph Brokman'; font-weight: 800; font-size: 19px;
+  letter-spacing: 0.02em; color: var(--white); margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.card .label .gen {
+  font-family: 'Triumph Brokman'; font-weight: 500; font-size: 14px;
+  letter-spacing: 0.06em; color: var(--grey-mid); text-transform: uppercase;
+}
+.card .label .gen .red-dot {
+  display: inline-block; width: 6px; height: 6px; background: var(--red);
+  vertical-align: 2px; margin-right: 8px;
+}
+
+.foot { position: absolute; bottom: 50px; left: 96px; font-family: 'Triumph Brokman'; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; }
+.next { position: absolute; bottom: 40px; right: 96px; width: 64px; height: 64px; border-radius: 50%; background: #00C853; display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); font-weight: 600; z-index: 10; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="bg"></div>
+  <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span><span class="cm br"></span>
+
+  <div class="brand"><span class="word">TRIUMPH</span><span class="tri"></span></div>
+  <div class="page"><span class="cur">08</span><span class="dim">—</span><span>14</span></div>
+
+  <div class="eyebrow">/////</div>
+  <div class="title">
+    <h1>Supported<br><span class="red">ECM Types.</span></h1>
+    <div class="sub">Keyed Immobiliser &amp; TPMS Systems</div>
+  </div>
+
+  <div class="groups">
+    <div class="group">
+      <div class="group-head">
+        <div class="label"><span class="num">01</span>Immobiliser ECMs</div>
+        <div class="meta">2 supported types</div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="imgwrap"><div class="placeholder">Image · LDL Gen 1</div></div>
+          <div class="label">
+            <div class="name">LDL Immobiliser</div>
+            <div class="gen"><span class="red-dot"></span>Generation 1</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgwrap"><div class="placeholder">Image · LDL Gen 2</div></div>
+          <div class="label">
+            <div class="name">LDL Immobiliser</div>
+            <div class="gen"><span class="red-dot"></span>Generation 2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-head">
+        <div class="label"><span class="num">02</span>TPMS ECMs</div>
+        <div class="meta">Pektron Chassis</div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="imgwrap"><div class="placeholder">Image · Pektron Gen 2</div></div>
+          <div class="label">
+            <div class="name">Pektron Chassis ECM</div>
+            <div class="gen"><span class="red-dot"></span>Generation 2</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgwrap"><div class="placeholder">Image · Pektron Gen 3</div></div>
+          <div class="label">
+            <div class="name">Pektron Chassis ECM</div>
+            <div class="gen"><span class="red-dot"></span>Generation 3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">Triumph · Technician Training</div>
+  <div class="next">›</div>
+</div>
+</body>
+</html>

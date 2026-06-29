@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 26 — TDT Immobiliser Menu Summary</title>
+<style>
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Medium.otf') format('opentype'); font-weight: 500; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-DemiBold.otf') format('opentype'); font-weight: 600; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-ExtraBold.otf') format('opentype'); font-weight: 800; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Black.otf') format('opentype'); font-weight: 900; }
+:root {
+  --bg: #050508; --surface: #111114; --surface-2: #16161B;
+  --hairline: #2A2A30; --grey-mid: #9090A0; --grey-hi: #D0D0DA;
+  --white: #FFFFFF; --red: #DC1924; --green: #00C853; --amber: #F5C400;
+  --teal: #38B0A8;
+  --purple: #B557CB;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--white); font-family: 'Triumph Brokman', sans-serif; overflow: hidden; -webkit-font-smoothing: antialiased; }
+.slide { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.bg { position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 800px 600px at 8% 10%, rgba(220, 25, 36, 0.24) 0%, transparent 55%),
+    radial-gradient(ellipse 700px 600px at 95% 90%, rgba(10, 10, 20, 0.9) 0%, transparent 55%),
+    linear-gradient(135deg, #0A0A12 0%, #050508 55%, #08080B 100%); }
+.bg::before { content: ""; position: absolute; top: -300px; left: -400px; width: 1600px; height: 900px;
+  background: linear-gradient(105deg, transparent 0%, transparent 30%, rgba(220, 25, 36, 0.16) 45%, rgba(255, 100, 110, 0.22) 50%, rgba(220, 25, 36, 0.12) 60%, transparent 75%);
+  transform: rotate(-12deg); filter: blur(60px); opacity: 0.85; }
+.bg::after { content: ""; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(108deg, transparent 0px, transparent 95px, rgba(255,255,255,0.010) 95px, rgba(255,255,255,0.010) 96px); }
+
+.cm { position: absolute; width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.55); z-index: 5; }
+.cm.tl { top: 28px; left: 28px; border-right: none; border-bottom: none; }
+.cm.tr { top: 28px; right: 28px; border-left: none; border-bottom: none; }
+.cm.bl { bottom: 28px; left: 28px; border-right: none; border-top: none; }
+.cm.br { bottom: 28px; right: 28px; border-left: none; border-top: none; }
+
+.brand { position: absolute; top: 70px; left: 96px; display: flex; align-items: center; gap: 14px; z-index: 10; }
+.brand .word { font-weight: 800; font-size: 28px; letter-spacing: 0.04em; }
+.brand .tri { width: 26px; height: 26px; position: relative; }
+.brand .tri::before { content: ""; position: absolute; inset: 0; background: var(--white); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+.brand .tri::after { content: ""; position: absolute; top: 35%; left: 35%; width: 30%; height: 50%; background: var(--bg); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+
+.page { position: absolute; top: 70px; right: 96px; font-size: 16px; color: var(--grey-mid); letter-spacing: 0.10em; font-weight: 500; z-index: 10; }
+.page .cur { color: var(--white); font-weight: 800; }
+.page .dim { color: rgba(255,255,255,0.25); margin: 0 8px; }
+
+.eyebrow { position: absolute; top: 138px; left: 96px; font-weight: 900; font-size: 30px; letter-spacing: -0.04em; color: var(--red); line-height: 0.8; z-index: 5; }
+.title { position: absolute; top: 180px; left: 96px; right: 96px; z-index: 5; }
+.title h1 { font-weight: 900; font-size: 80px; line-height: 0.96; letter-spacing: 0.005em; text-transform: uppercase; }
+.title h1 .red { color: var(--red); }
+
+.intro {
+  position: absolute; top: 320px; left: 96px; right: 96px; z-index: 5;
+  padding: 22px 28px; border-left: 4px solid var(--red);
+  background: rgba(220, 25, 36, 0.05);
+  font-weight: 500; font-size: 22px; line-height: 1.45; color: var(--white);
+}
+.intro strong { font-weight: 800; }
+
+/* Three model cards */
+.models {
+  position: absolute; top: 460px; left: 96px; right: 96px; z-index: 5;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.mc {
+  background: rgba(8, 8, 12, 0.65); border: 1px solid var(--hairline);
+  padding: 24px 26px;
+  display: flex; flex-direction: column; gap: 14px;
+  position: relative; overflow: hidden;
+}
+.mc::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; }
+.mc.key::before { background: var(--green); }
+.mc.keyless::before { background: var(--teal); }
+.mc.cc400::before { background: var(--purple); }
+
+.mc .badge {
+  align-self: flex-start;
+  padding: 8px 14px;
+  font-weight: 900; font-size: 12px; letter-spacing: 0.18em; color: var(--white); text-transform: uppercase;
+}
+.mc.key .badge { background: rgba(0, 200, 83, 0.18); color: var(--green); border: 1px solid rgba(0, 200, 83, 0.45); }
+.mc.keyless .badge { background: rgba(56, 176, 168, 0.18); color: var(--teal); border: 1px solid rgba(56, 176, 168, 0.45); }
+.mc.cc400 .badge { background: rgba(181, 87, 203, 0.18); color: var(--purple); border: 1px solid rgba(181, 87, 203, 0.45); }
+
+.mc h2 {
+  font-weight: 900; font-size: 24px; line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; color: var(--white);
+}
+.mc .menu-label {
+  font-weight: 700; font-size: 12px; letter-spacing: 0.18em; color: var(--grey-mid); text-transform: uppercase;
+}
+.mc .items { display: flex; flex-direction: column; gap: 8px; }
+.mc .item {
+  padding: 12px 14px;
+  background: var(--surface-2); border: 1px solid var(--hairline);
+  font-weight: 700; font-size: 15px; color: var(--white);
+  display: flex; align-items: center; gap: 10px;
+}
+.mc .item .dot { width: 6px; height: 6px; background: var(--amber); flex-shrink: 0; }
+
+/* Bottom note about Manufacturer Reference Only */
+.bottom-note {
+  position: absolute; left: 96px; right: 96px; bottom: 130px; z-index: 5;
+  background: rgba(8, 8, 12, 0.55); border: 1px solid var(--hairline);
+  padding: 18px 24px;
+  display: flex; align-items: center; gap: 20px;
+}
+.bottom-note .tag {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  background: rgba(245, 196, 0, 0.12); border: 1px solid rgba(245, 196, 0, 0.5);
+  font-weight: 800; font-size: 12px; letter-spacing: 0.16em; color: var(--amber); text-transform: uppercase;
+}
+.bottom-note p {
+  font-weight: 400; font-size: 16px; line-height: 1.5; color: var(--grey-hi);
+}
+.bottom-note p strong { color: var(--white); font-weight: 700; }
+
+.foot { position: absolute; bottom: 50px; left: 96px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; }
+.next { position: absolute; bottom: 40px; right: 96px; width: 64px; height: 64px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); font-weight: 600; z-index: 10; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="bg"></div>
+  <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span><span class="cm br"></span>
+
+  <div class="brand"><span class="word">TRIUMPH</span><span class="tri"></span></div>
+  <div class="page"><span class="cur">26</span><span class="dim">—</span><span>30</span></div>
+
+  <div class="eyebrow">/////</div>
+  <div class="title"><h1>TDT Immobiliser <span class="red">menu summary.</span></h1></div>
+
+  <div class="intro">
+    The following three slides summarise the contents of the <strong>Immobiliser Diagnostics menu</strong>. Depending on model will determine what the TDT menu will show, they are:
+  </div>
+
+  <div class="models">
+    <div class="mc key">
+      <span class="badge">Key Models Only (Not 400cc)</span>
+      <h2>Key Ignition Models</h2>
+      <span class="menu-label">Menu</span>
+      <div class="items">
+        <div class="item"><span class="dot"></span>Read stored DTC's</div>
+        <div class="item"><span class="dot"></span>Configure</div>
+      </div>
+    </div>
+
+    <div class="mc keyless">
+      <span class="badge">All Keyless Models</span>
+      <h2>Keyless Models</h2>
+      <span class="menu-label">Menu</span>
+      <div class="items">
+        <div class="item"><span class="dot"></span>Build data</div>
+        <div class="item"><span class="dot"></span>Read stored DTC's</div>
+        <div class="item"><span class="dot"></span>Configure</div>
+      </div>
+    </div>
+
+    <div class="mc cc400">
+      <span class="badge">400cc Only</span>
+      <h2>400cc Models</h2>
+      <span class="menu-label">Menu</span>
+      <div class="items">
+        <div class="item"><span class="dot"></span>Build data</div>
+        <div class="item"><span class="dot"></span>Read DTC's</div>
+        <div class="item"><span class="dot"></span>Live Data</div>
+        <div class="item"><span class="dot"></span>Adjust</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-note">
+    <span class="tag">Manufacturer Reference Only</span>
+    <p>There can be a huge amount of information found in these menus, however some of this information is applicable to the <strong>manufacturer only</strong>. The following slides help to identify which is the <strong>most useful information to dealers</strong>, and which is applicable to the manufacturer only — indicated by <strong>'Manufacturer reference only'</strong>.</p>
+  </div>
+
+  <div class="foot">Triumph · Technician Training</div>
+  <div class="next">›</div>
+</div>
+</body>
+</html>

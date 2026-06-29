@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 18a — Establishing Communications · Methods, Authentication, Timing</title>
+<style>
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Medium.otf') format('opentype'); font-weight: 500; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-DemiBold.otf') format('opentype'); font-weight: 600; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-ExtraBold.otf') format('opentype'); font-weight: 800; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Black.otf') format('opentype'); font-weight: 900; }
+:root {
+  --bg: #050508; --surface: #111114; --surface-2: #16161B;
+  --hairline: #2A2A30; --grey-mid: #9090A0; --grey-hi: #D0D0DA;
+  --white: #FFFFFF; --red: #DC1924; --green: #00C853; --amber: #F5C400;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--white); font-family: 'Triumph Brokman', sans-serif; overflow: hidden; -webkit-font-smoothing: antialiased; }
+.slide { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.bg { position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 800px 600px at 8% 10%, rgba(220, 25, 36, 0.26) 0%, transparent 55%),
+    radial-gradient(ellipse 700px 600px at 95% 90%, rgba(10, 10, 20, 0.9) 0%, transparent 55%),
+    linear-gradient(135deg, #0A0A12 0%, #050508 55%, #08080B 100%); }
+.bg::before { content: ""; position: absolute; top: -300px; left: -400px; width: 1600px; height: 900px;
+  background: linear-gradient(105deg, transparent 0%, transparent 30%, rgba(220, 25, 36, 0.18) 45%, rgba(255, 100, 110, 0.24) 50%, rgba(220, 25, 36, 0.14) 60%, transparent 75%);
+  transform: rotate(-12deg); filter: blur(60px); opacity: 0.85; }
+.bg::after { content: ""; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(108deg, transparent 0px, transparent 95px, rgba(255,255,255,0.010) 95px, rgba(255,255,255,0.010) 96px); }
+
+.cm { position: absolute; width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.55); z-index: 5; }
+.cm.tl { top: 28px; left: 28px; border-right: none; border-bottom: none; }
+.cm.tr { top: 28px; right: 28px; border-left: none; border-bottom: none; }
+.cm.bl { bottom: 28px; left: 28px; border-right: none; border-top: none; }
+.cm.br { bottom: 28px; right: 28px; border-left: none; border-top: none; }
+
+.brand { position: absolute; top: 70px; left: 96px; display: flex; align-items: center; gap: 14px; z-index: 10; }
+.brand .word { font-weight: 800; font-size: 28px; letter-spacing: 0.04em; }
+.brand .tri { width: 26px; height: 26px; position: relative; }
+.brand .tri::before { content: ""; position: absolute; inset: 0; background: var(--white); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+.brand .tri::after { content: ""; position: absolute; top: 35%; left: 35%; width: 30%; height: 50%; background: var(--bg); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+
+.page { position: absolute; top: 70px; right: 96px; font-size: 16px; color: var(--grey-mid); letter-spacing: 0.10em; font-weight: 500; z-index: 10; }
+.page .cur { color: var(--white); font-weight: 800; }
+.page .dim { color: rgba(255,255,255,0.25); margin: 0 8px; }
+
+.eyebrow { position: absolute; top: 138px; left: 96px; font-weight: 900; font-size: 30px; letter-spacing: -0.04em; color: var(--red); line-height: 0.8; z-index: 5; }
+.partlabel { position: absolute; top: 142px; left: 200px; font-weight: 800; font-size: 13px; letter-spacing: 0.20em; color: var(--grey-mid); text-transform: uppercase; z-index: 5; }
+.partlabel .of { color: rgba(255,255,255,0.3); }
+
+.title { position: absolute; top: 180px; left: 96px; right: 96px; z-index: 5; }
+.title h1 { font-weight: 900; font-size: 76px; line-height: 0.96; letter-spacing: 0.005em; text-transform: uppercase; }
+.title h1 .red { color: var(--red); }
+
+/* Lead (verbatim) */
+.lead {
+  position: absolute; top: 320px; left: 96px; right: 96px; z-index: 5;
+  padding: 22px 28px; border-left: 4px solid var(--red);
+  background: rgba(220, 25, 36, 0.05);
+  font-weight: 500; font-size: 22px; line-height: 1.45; color: var(--white);
+}
+.lead strong { font-weight: 800; }
+
+/* Methods card — full width */
+.methods {
+  position: absolute; top: 440px; left: 96px; right: 96px; z-index: 5;
+  background: rgba(8, 8, 12, 0.55); border: 1px solid var(--hairline);
+  padding: 26px 32px;
+}
+.methods .h { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.methods .h .b { font-weight: 900; font-size: 12px; letter-spacing: 0.22em; color: var(--red); text-transform: uppercase; }
+.methods .h .t { font-weight: 800; font-size: 16px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--white); }
+.methods .h .line { flex: 1; height: 1px; background: var(--hairline); }
+.methods p { font-weight: 400; font-size: 19px; line-height: 1.5; color: var(--grey-hi); margin-bottom: 16px; }
+.methods p strong { color: var(--white); font-weight: 700; }
+.methods .chips { display: flex; gap: 12px; }
+.methods .chip {
+  padding: 14px 22px;
+  background: var(--surface-2); border: 1px solid var(--hairline); border-left: 4px solid var(--red);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.methods .chip .tag { font-weight: 900; font-size: 20px; color: var(--white); }
+.methods .chip .role { font-weight: 500; font-size: 13px; color: var(--grey-mid); letter-spacing: 0.04em; }
+
+/* Two-col below: Auth + Timing */
+.lower {
+  position: absolute; top: 690px; left: 96px; right: 96px; bottom: 120px;
+  display: grid; grid-template-columns: 1fr 1.15fr; gap: 32px; z-index: 5;
+}
+.sec {
+  background: rgba(8, 8, 12, 0.55); border: 1px solid var(--hairline);
+  padding: 22px 28px;
+  display: flex; flex-direction: column;
+}
+.sec .h { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.sec .h .b { font-weight: 900; font-size: 12px; letter-spacing: 0.22em; color: var(--red); text-transform: uppercase; }
+.sec .h .t { font-weight: 800; font-size: 16px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--white); }
+.sec .h .line { flex: 1; height: 1px; background: var(--hairline); }
+.sec p { font-weight: 400; font-size: 17px; line-height: 1.5; color: var(--grey-hi); }
+.sec p + p { margin-top: 10px; }
+.sec p strong { color: var(--white); font-weight: 700; }
+
+.timing-row { display: flex; gap: 10px; margin-top: 14px; }
+.tpill {
+  flex: 1; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--hairline);
+}
+.tpill .lab { font-weight: 600; font-size: 10px; letter-spacing: 0.20em; color: var(--grey-mid); text-transform: uppercase; margin-bottom: 6px; }
+.tpill .val { font-weight: 800; font-size: 26px; line-height: 1; color: var(--white); }
+.tpill .val .u { font-weight: 500; font-size: 13px; color: var(--grey-mid); margin-left: 4px; }
+.tpill.nominal { border-color: rgba(0, 200, 83, 0.4); }
+.tpill.nominal .val { color: var(--green); }
+
+.foot { position: absolute; bottom: 50px; left: 96px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; }
+.next { position: absolute; bottom: 40px; right: 96px; width: 64px; height: 64px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); font-weight: 600; z-index: 10; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="bg"></div>
+  <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span><span class="cm br"></span>
+
+  <div class="brand"><span class="word">TRIUMPH</span><span class="tri"></span></div>
+  <div class="page"><span class="cur">18</span><span class="dim">—</span><span>26</span></div>
+
+  <div class="eyebrow">/////</div>
+  <div class="partlabel">Part 1 <span class="of">/</span> 2</div>
+  <div class="title"><h1>Establishing Communications <span class="red">with Key</span></h1></div>
+
+  <div class="lead">
+    The key recognition process is initiated by the <strong>KCU energising the external LF antenna(e)</strong>.
+  </div>
+
+  <div class="methods">
+    <div class="h"><span class="b">01</span><span class="t">Communication Methods</span><span class="line"></span></div>
+    <p>There are <strong>two methods of communication</strong> from the key to the KCU, either via UHF (for "smart" keys) or LF (as a backup method for "smart" keys and used for "non-smart" keys).</p>
+    <div class="chips">
+      <div class="chip"><span class="tag">UHF</span><span class="role">For "smart" keys</span></div>
+      <div class="chip"><span class="tag">LF</span><span class="role">Backup for "smart" · used for "non-smart"</span></div>
+    </div>
+  </div>
+
+  <div class="lower">
+    <div class="sec">
+      <div class="h"><span class="b">02</span><span class="t">Authentication</span><span class="line"></span></div>
+      <p>The key recognition is based on a <strong>mutual identification and authentication</strong> between the transponder and the <strong>RCU KCU or CCU</strong>.</p>
+    </div>
+
+    <div class="sec">
+      <div class="h"><span class="b">03</span><span class="t">Timing</span><span class="line"></span></div>
+      <p>The key recognition process <strong>must remain transparent for the rider</strong>, and therefore the time taken to authenticate the key should be <strong>as short as practicable</strong>. The overall time before the key authentication result is available should be a <strong>maximum of approximately 5 seconds</strong>. The nominal time before the key authentication result is available however is <strong>200ms</strong>.</p>
+      <div class="timing-row">
+        <div class="tpill nominal"><div class="lab">Nominal</div><div class="val">200<span class="u">ms</span></div></div>
+        <div class="tpill"><div class="lab">Maximum (approx.)</div><div class="val">~5<span class="u">seconds</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">Triumph · Technician Training</div>
+  <div class="next">›</div>
+</div>
+</body>
+</html>
