@@ -82,7 +82,9 @@ Principal Differences of Key and Keyless Immobiliser / Ignition System
 
 ## Slide 8 — Feature Comparison Table: Key vs Keyless
 
-> ⚠ Text extraction missed this — content is in a PPTX table with image placeholders at top for key photos. Full content from visual review:
+> [SME NOTES] Reveal pairs of options in sequence – learners drop the description into the box they think is correct and hit the validate button. On correct choice the next options appear for the next row – on incorrect they should highlight in some way an opportunity to try again (I say try, there's only one other combination possible!) and re-validate.
+
+> ⚠ Text extraction missed table content — in a PPTX table with image placeholders at top for key photos. Full content from visual review:
 
 Two image placeholder boxes at top (one for Key system photo, one for Keyless system photo).
 

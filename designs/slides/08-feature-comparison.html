@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Slide 08 — Feature Comparison Table: Key vs Keyless</title>
+<title>Slide 08 — Feature Comparison (Drag-Drop Interaction)</title>
 <style>
 @font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Regular.otf') format('opentype'); font-weight: 400; }
 @font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Medium.otf') format('opentype'); font-weight: 500; }
@@ -42,86 +42,216 @@ html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--
 .page .cur { color: var(--white); font-weight: 800; }
 .page .dim { color: rgba(255,255,255,0.25); margin: 0 8px; }
 .eyebrow { position: absolute; top: 150px; left: 96px; font-weight: 900; font-size: 32px; letter-spacing: -0.04em; color: var(--red); line-height: 0.8; z-index: 5; }
-.title { position: absolute; top: 190px; left: 96px; z-index: 5; }
-.title h1 { font-weight: 900; font-size: 64px; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
+.title { position: absolute; top: 192px; left: 96px; z-index: 5; }
+.title h1 { font-weight: 900; font-size: 58px; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
 .title h1 .red { color: var(--red); display: block; }
 .foot { position: absolute; bottom: 50px; left: 96px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; }
 .next { position: absolute; bottom: 40px; right: 96px; width: 64px; height: 64px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); font-weight: 600; z-index: 10; }
 
-/* Photo placeholder row */
+/* Photo placeholders — right of title */
 .photos {
   position: absolute;
-  top: 160px;
-  left: 500px;
+  top: 152px;
+  left: 560px;
   right: 96px;
-  height: 140px;
+  height: 128px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 14px;
   z-index: 5;
 }
 .photo-box {
-  border: 1px dashed rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.03);
+  border: 1px dashed rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.02);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-}
-.photo-box .ph-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.18);
 }
 
-/* Comparison table */
-.cmp-table {
+/* Whole table block */
+.table-block {
   position: absolute;
-  top: 316px;
+  top: 295px;
   left: 96px;
   right: 96px;
-  bottom: 100px;
+  bottom: 92px;
   display: flex;
   flex-direction: column;
   z-index: 5;
 }
-.cmp-row {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 340px 1fr 1fr;
+
+/* Column widths shared via grid */
+.grid3 { display: grid; grid-template-columns: 300px 1fr 1fr; }
+
+/* Header */
+.t-header {
+  flex-shrink: 0;
+  background: var(--surface-2);
   border: 1px solid var(--hairline);
   border-bottom: none;
 }
-.cmp-row:last-child { border-bottom: 1px solid var(--hairline); }
-.cmp-row.hdr { flex: none; background: var(--surface-2); }
-.cmp-cell {
-  padding: 0 28px;
-  display: flex;
-  align-items: center;
-  border-right: 1px solid var(--hairline);
-  font-size: 19px;
-  font-weight: 400;
-  color: var(--grey-hi);
-  line-height: 1.4;
-}
-.cmp-cell:last-child { border-right: none; }
-.cmp-row.hdr .cmp-cell {
-  font-size: 12px;
+.t-header .hcell {
+  padding: 13px 24px;
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--grey-mid);
-  padding-top: 18px;
-  padding-bottom: 18px;
+  border-right: 1px solid var(--hairline);
 }
-.cmp-row.hdr .cmp-cell.keyless-col { color: var(--red); }
-.cmp-cell.feature {
+.t-header .hcell:last-child { border-right: none; }
+.t-header .hcell.kl { color: var(--red); }
+
+/* Active row */
+.t-active {
+  flex-shrink: 0;
+  border: 1px solid var(--red);
+  border-bottom: none;
+  background: rgba(220,25,36,0.06);
+  box-shadow: 0 0 0 1px rgba(220,25,36,0.15);
+}
+.t-active .fcell {
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid rgba(220,25,36,0.3);
+  font-size: 17px;
   font-weight: 700;
   color: var(--white);
-  font-size: 18px;
+  height: 68px;
 }
+.t-active .drop-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 68px;
+  border-right: 1px solid rgba(220,25,36,0.2);
+}
+.t-active .drop-zone:last-child { border-right: none; }
+.drop-inner {
+  width: calc(100% - 28px);
+  height: 44px;
+  border: 2px dashed rgba(255,255,255,0.2);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+}
+
+/* Card tray */
+.t-tray {
+  flex-shrink: 0;
+  border: 1px solid rgba(220,25,36,0.3);
+  border-top: none;
+  border-bottom: none;
+  background: rgba(5,5,10,0.7);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 24px;
+}
+.tray-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-mid);
+  white-space: nowrap;
+}
+.drag-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--grey-hi);
+  cursor: grab;
+}
+.drag-card .grip {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.drag-card .grip span {
+  display: block;
+  width: 14px;
+  height: 2px;
+  background: var(--grey-mid);
+  border-radius: 1px;
+}
+.validate-btn {
+  margin-left: auto;
+  padding: 10px 28px;
+  background: transparent;
+  border: 1px solid rgba(220,25,36,0.3);
+  color: rgba(220,25,36,0.4);
+  font-family: 'Triumph Brokman', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: not-allowed;
+}
+.validate-btn .hint {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: rgba(220,25,36,0.3);
+  margin-top: 2px;
+  text-align: center;
+}
+
+/* Locked rows */
+.t-locked {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.locked-row {
+  flex: 1;
+  border: 1px solid var(--hairline);
+  border-bottom: none;
+  opacity: 0.3;
+}
+.locked-row:last-child { border-bottom: 1px solid var(--hairline); }
+.locked-row .fcell {
+  height: 100%;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--grey-mid);
+  border-right: 1px solid var(--hairline);
+}
+.locked-row .lcell {
+  height: 100%;
+  border-right: 1px solid var(--hairline);
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0px, transparent 5px,
+    rgba(255,255,255,0.015) 5px, rgba(255,255,255,0.015) 6px
+  );
+}
+.locked-row .lcell:last-child { border-right: none; }
 </style>
 </head>
 <body>
@@ -135,55 +265,62 @@ html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--
   <div class="title"><h1>Feature<br><span class="red">comparison.</span></h1></div>
 
   <div class="photos">
-    <div class="photo-box"><span class="ph-label">Key ignition system — photo</span></div>
-    <div class="photo-box"><span class="ph-label">Keyless ignition system — photo</span></div>
+    <div class="photo-box">Key ignition system — photo</div>
+    <div class="photo-box">Keyless ignition system — photo</div>
   </div>
 
-  <div class="cmp-table">
-    <div class="cmp-row hdr">
-      <div class="cmp-cell">Feature</div>
-      <div class="cmp-cell">Key Ignition System</div>
-      <div class="cmp-cell keyless-col">Keyless Ignition System</div>
+  <div class="table-block">
+    <!-- Header -->
+    <div class="t-header grid3">
+      <div class="hcell">Feature</div>
+      <div class="hcell">Key Ignition System</div>
+      <div class="hcell kl">Keyless Ignition System</div>
     </div>
-    <div class="cmp-row">
-      <div class="cmp-cell feature">Authentication Method</div>
-      <div class="cmp-cell">Physical RFID key detection</div>
-      <div class="cmp-cell">Proximity-based encrypted fob communication</div>
+
+    <!-- Active row — Authentication Method -->
+    <div class="t-active grid3">
+      <div class="fcell">Authentication Method</div>
+      <div class="drop-zone"><div class="drop-inner">Drop here</div></div>
+      <div class="drop-zone"><div class="drop-inner">Drop here</div></div>
     </div>
-    <div class="cmp-row">
-      <div class="cmp-cell feature">Security</div>
-      <div class="cmp-cell">Moderate (key can be lost or copied)</div>
-      <div class="cmp-cell">High (encryption and proximity add security)</div>
+
+    <!-- Card tray -->
+    <div class="t-tray">
+      <span class="tray-label">Drag to match →</span>
+      <div class="drag-card">
+        <div class="grip"><span></span><span></span><span></span></div>
+        Physical RFID key detection
+      </div>
+      <div class="drag-card">
+        <div class="grip"><span></span><span></span><span></span></div>
+        Proximity-based encrypted fob communication
+      </div>
+      <button class="validate-btn">Validate<span class="hint">Place both cards first</span></button>
     </div>
-    <div class="cmp-row">
-      <div class="cmp-cell feature">Complexity of Use</div>
-      <div class="cmp-cell">Simple, traditional operation</div>
-      <div class="cmp-cell">Slightly more complex, automatic detection</div>
-    </div>
-    <div class="cmp-row">
-      <div class="cmp-cell feature">Reliability</div>
-      <div class="cmp-cell">Proven, long-term technology</div>
-      <div class="cmp-cell">Dependent on battery in fob</div>
-    </div>
-    <div class="cmp-row">
-      <div class="cmp-cell feature">Convenience</div>
-      <div class="cmp-cell">Requires manual key insertion</div>
-      <div class="cmp-cell">Seamless, no physical action needed</div>
-    </div>
-    <div class="cmp-row">
-      <div class="cmp-cell feature">Vulnerability to Theft</div>
-      <div class="cmp-cell">Key duplication possible</div>
-      <div class="cmp-cell">Potential fob hacking, relay attacks unless key is 'off'</div>
-    </div>
-    <div class="cmp-row">
-      <div class="cmp-cell feature">Cost</div>
-      <div class="cmp-cell">Lower, simple mechanical components</div>
-      <div class="cmp-cell">Higher, advanced electronic modules</div>
-    </div>
-    <div class="cmp-row">
-      <div class="cmp-cell feature">Maintenance</div>
-      <div class="cmp-cell">Low, minimal wear parts</div>
-      <div class="cmp-cell">Medium, fob battery replacement required</div>
+
+    <!-- Locked rows -->
+    <div class="t-locked">
+      <div class="locked-row grid3">
+        <div class="fcell">Security</div><div class="lcell"></div><div class="lcell"></div>
+      </div>
+      <div class="locked-row grid3">
+        <div class="fcell">Complexity of Use</div><div class="lcell"></div><div class="lcell"></div>
+      </div>
+      <div class="locked-row grid3">
+        <div class="fcell">Reliability</div><div class="lcell"></div><div class="lcell"></div>
+      </div>
+      <div class="locked-row grid3">
+        <div class="fcell">Convenience</div><div class="lcell"></div><div class="lcell"></div>
+      </div>
+      <div class="locked-row grid3">
+        <div class="fcell">Vulnerability to Theft</div><div class="lcell"></div><div class="lcell"></div>
+      </div>
+      <div class="locked-row grid3">
+        <div class="fcell">Cost</div><div class="lcell"></div><div class="lcell"></div>
+      </div>
+      <div class="locked-row grid3">
+        <div class="fcell">Maintenance</div><div class="lcell"></div><div class="lcell"></div>
+      </div>
     </div>
   </div>
 
