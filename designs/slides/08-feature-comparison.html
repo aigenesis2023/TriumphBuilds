@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Slide 08 — Feature Comparison (Drag-Drop, One at a Time)</title>
+<title>Slide 08 — Feature Comparison Drag-Drop</title>
 <style>
 @font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Regular.otf') format('opentype'); font-weight: 400; }
 @font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Medium.otf') format('opentype'); font-weight: 500; }
@@ -13,7 +13,7 @@
 :root {
   --bg: #050508; --surface: #111114; --surface-2: #16161B;
   --hairline: #2A2A30; --grey-mid: #9090A0; --grey-hi: #D0D0DA;
-  --white: #FFFFFF; --red: #DC1924; --green: #00C853;
+  --white: #FFFFFF; --red: #DC1924; --green: #00C853; --amber: #F59E0B;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--white); font-family: 'Triumph Brokman', sans-serif; overflow: hidden; -webkit-font-smoothing: antialiased; }
@@ -48,213 +48,259 @@ html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--
 .foot { position: absolute; bottom: 50px; left: 96px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; }
 .next { position: absolute; bottom: 40px; right: 96px; width: 64px; height: 64px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); font-weight: 600; z-index: 10; }
 
-/* Progress dots */
-.progress {
+/* ── DRAG CARDS (top-right, alongside title) ── */
+/* These look like solid pickable objects */
+.drag-cards {
   position: absolute;
-  top: 218px;
-  left: 780px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  z-index: 5;
-}
-.progress .label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--grey-mid);
-  margin-right: 6px;
-}
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--hairline);
-}
-.dot.done { background: var(--green); }
-.dot.active { background: var(--red); width: 12px; height: 12px; }
-
-/* Photo placeholders */
-.photos {
-  position: absolute;
-  top: 195px;
-  left: 1100px;
+  top: 185px;
+  left: 660px;
   right: 96px;
-  height: 170px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 20px;
   z-index: 5;
 }
-.photo-box {
-  border: 1px dashed rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.02);
+.drag-card {
+  background: var(--surface-2);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-top: 4px solid rgba(255,255,255,0.35);
+  padding: 24px 28px 24px 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 11px;
+  gap: 16px;
+  cursor: grab;
+  /* Slight elevation via top border — makes it look "raised" and pickable */
+}
+.grip {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 4px 2px;
+}
+.grip span {
+  display: block;
+  width: 16px;
+  height: 2px;
+  background: var(--grey-mid);
+  border-radius: 1px;
+}
+.card-text {
+  font-size: 20px;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.18);
+  color: var(--white);
+  line-height: 1.4;
+}
+
+/* Instruction text */
+.instruction {
+  position: absolute;
+  top: 386px;
+  left: 96px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--grey-mid);
+  letter-spacing: 0.02em;
+  z-index: 5;
+}
+.instruction strong { color: var(--white); font-weight: 700; }
+
+/* ── TABLE ── */
+.table-wrap {
+  position: absolute;
+  top: 424px;
+  left: 96px;
+  right: 96px;
+  z-index: 5;
 }
 
 /* Column header */
 .col-header {
-  position: absolute;
-  top: 390px;
-  left: 96px;
-  right: 96px;
-  height: 48px;
   display: grid;
-  grid-template-columns: 340px 1fr 1fr;
+  grid-template-columns: 320px 1fr 1fr;
   background: var(--surface-2);
   border: 1px solid var(--hairline);
-  z-index: 5;
 }
-.col-header .hcell {
-  padding: 0 28px;
-  display: flex;
-  align-items: center;
-  font-size: 11px;
+.hcell {
+  padding: 14px 28px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--grey-mid);
   border-right: 1px solid var(--hairline);
 }
-.col-header .hcell:last-child { border-right: none; }
-.col-header .hcell.kl { color: var(--red); }
+.hcell:last-child { border-right: none; }
+.hcell.kl { color: var(--red); }
 
-/* Active question row */
-.question-row {
-  position: absolute;
-  top: 438px;
-  left: 96px;
-  right: 96px;
-  height: 120px;
+/* Active row */
+.active-row {
   display: grid;
-  grid-template-columns: 340px 1fr 1fr;
+  grid-template-columns: 320px 1fr 1fr;
   border: 1px solid var(--red);
   border-top: none;
-  background: rgba(220,25,36,0.05);
-  z-index: 5;
+  background: rgba(220,25,36,0.04);
+  height: 190px;
 }
-.question-row .feature-label {
+.feature-cell {
   padding: 0 28px;
   display: flex;
   align-items: center;
   font-size: 22px;
   font-weight: 700;
   color: var(--white);
-  border-right: 1px solid rgba(220,25,36,0.3);
+  border-right: 1px solid rgba(220,25,36,0.25);
 }
-.drop-zone {
+
+/* ── DROP ZONES (hollow receptacles — clearly different from drag cards) ── */
+.drop-zone-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
   border-right: 1px solid rgba(220,25,36,0.2);
 }
-.drop-zone:last-child { border-right: none; }
-.drop-inner {
-  width: calc(100% - 40px);
-  height: 76px;
-  border: 2px dashed rgba(255,255,255,0.18);
-  border-radius: 4px;
+.drop-zone-wrap:last-child { border-right: none; }
+.drop-zone {
+  width: calc(100% - 36px);
+  height: 120px;
+  /* Solid border, NOT dashed — distinct from cards which have top-only border */
+  border: 2px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.025);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+  border-radius: 2px;
+}
+.drop-zone .dz-arrow {
+  font-size: 28px;
+  color: rgba(255,255,255,0.12);
+  line-height: 1;
+}
+.drop-zone .dz-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+}
+
+/* ── BOTTOM BAR: progress + validate ── */
+.bottom-bar {
+  position: absolute;
+  top: 660px;
+  left: 96px;
+  right: 96px;
+  display: flex;
+  align-items: center;
+  z-index: 5;
+}
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.progress .prog-label {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.16);
-}
-
-/* Card tray */
-.card-tray {
-  position: absolute;
-  top: 610px;
-  left: 96px;
-  right: 96px;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.tray-label {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--grey-mid);
+  margin-right: 8px;
 }
-.cards {
-  display: flex;
-  gap: 24px;
-}
-.drag-card {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 28px 36px;
-  background: var(--surface);
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
   border: 1px solid var(--hairline);
-  border-top: 3px solid var(--hairline);
-  border-radius: 2px;
-  cursor: grab;
 }
-.drag-card .grip {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex-shrink: 0;
+.dot.active {
+  background: var(--red);
+  border-color: var(--red);
+  width: 12px;
+  height: 12px;
 }
-.drag-card .grip span {
-  display: block;
-  width: 18px;
-  height: 2px;
-  background: var(--grey-mid);
-  border-radius: 1px;
-}
-.drag-card .card-text {
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--white);
-  line-height: 1.4;
-}
+.dot.done { background: var(--green); border-color: var(--green); }
 
-/* Validate */
-.validate-row {
-  position: absolute;
-  bottom: 100px;
-  right: 96px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  z-index: 5;
-}
-.validate-hint {
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.25);
-  font-style: italic;
-}
 .validate-btn {
-  padding: 16px 48px;
-  background: transparent;
-  border: 1px solid rgba(220,25,36,0.35);
-  color: rgba(220,25,36,0.45);
+  margin-left: auto;
+  padding: 18px 56px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.3);
   font-family: 'Triumph Brokman', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.20em;
   text-transform: uppercase;
   border-radius: 2px;
   cursor: not-allowed;
 }
+.validate-hint {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.22);
+  font-style: italic;
+  margin-right: 20px;
+}
+
+/* ── INCORRECT FEEDBACK STATE (shown as annotation, SL3 layer) ── */
+/* Note for SL3 build:
+   On incorrect: overlay this panel (T-layer) over the active row.
+   - Wrong drop zone gets: border 2px solid var(--red), background rgba(220,25,36,0.12)
+   - Correct drop zone gets: border 2px solid var(--green), background rgba(0,200,83,0.08)
+   - Feedback strip below row shows the message below.
+*/
+.feedback-strip {
+  position: absolute;
+  top: 618px;
+  left: 96px;
+  right: 96px;
+  padding: 16px 28px;
+  background: rgba(220,25,36,0.10);
+  border: 1px solid rgba(220,25,36,0.35);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 6;
+}
+.feedback-strip .fb-icon {
+  font-size: 22px;
+  color: var(--red);
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.feedback-strip .fb-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--white);
+}
+.feedback-strip .fb-sub {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--grey-hi);
+  margin-top: 2px;
+}
+.feedback-strip .retry-btn {
+  margin-left: auto;
+  padding: 12px 36px;
+  background: var(--red);
+  border: none;
+  color: var(--white);
+  font-family: 'Triumph Brokman', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Hide feedback strip in default state — shown in SL3 incorrect layer */
+.feedback-strip { display: none; }
 </style>
 </head>
 <body>
@@ -267,58 +313,68 @@ html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--
   <div class="eyebrow">/////</div>
   <div class="title"><h1>Feature<br><span class="red">comparison.</span></h1></div>
 
-  <!-- Progress indicator -->
-  <div class="progress">
-    <span class="label">1 of 8</span>
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+  <!-- DRAG CARDS — solid, raised, clearly pickable -->
+  <div class="drag-cards">
+    <div class="drag-card">
+      <div class="grip"><span></span><span></span><span></span><span></span></div>
+      <span class="card-text">Physical RFID key detection</span>
+    </div>
+    <div class="drag-card">
+      <div class="grip"><span></span><span></span><span></span><span></span></div>
+      <span class="card-text">Proximity-based encrypted fob communication</span>
+    </div>
   </div>
 
-  <!-- Photo placeholders -->
-  <div class="photos">
-    <div class="photo-box">Key ignition system — photo</div>
-    <div class="photo-box">Keyless ignition system — photo</div>
-  </div>
+  <!-- Instruction -->
+  <div class="instruction">Drag each description to the <strong>correct column</strong> below, then hit Validate.</div>
 
-  <!-- Column headers -->
-  <div class="col-header">
-    <div class="hcell">Feature</div>
-    <div class="hcell">Key Ignition System</div>
-    <div class="hcell kl">Keyless Ignition System</div>
-  </div>
-
-  <!-- Active row -->
-  <div class="question-row">
-    <div class="feature-label">Authentication Method</div>
-    <div class="drop-zone"><div class="drop-inner">Drop here</div></div>
-    <div class="drop-zone"><div class="drop-inner">Drop here</div></div>
-  </div>
-
-  <!-- Drag cards -->
-  <div class="card-tray">
-    <span class="tray-label">Drag to the correct column ↑</span>
-    <div class="cards">
-      <div class="drag-card">
-        <div class="grip"><span></span><span></span><span></span></div>
-        <span class="card-text">Physical RFID key detection</span>
+  <!-- Table -->
+  <div class="table-wrap">
+    <div class="col-header">
+      <div class="hcell">Feature</div>
+      <div class="hcell">Key Ignition System</div>
+      <div class="hcell kl">Keyless Ignition System</div>
+    </div>
+    <div class="active-row">
+      <div class="feature-cell">Authentication Method</div>
+      <!-- DROP ZONES — hollow, receptacle-shaped, different style from cards -->
+      <div class="drop-zone-wrap">
+        <div class="drop-zone">
+          <span class="dz-arrow">↓</span>
+          <span class="dz-label">Drop here</span>
+        </div>
       </div>
-      <div class="drag-card">
-        <div class="grip"><span></span><span></span><span></span></div>
-        <span class="card-text">Proximity-based encrypted fob communication</span>
+      <div class="drop-zone-wrap">
+        <div class="drop-zone">
+          <span class="dz-arrow">↓</span>
+          <span class="dz-label">Drop here</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Validate -->
-  <div class="validate-row">
-    <span class="validate-hint">Place both cards to continue</span>
+  <!-- Bottom bar: progress + validate -->
+  <div class="bottom-bar">
+    <div class="progress">
+      <span class="prog-label">1 of 8</span>
+      <div class="dot active"></div>
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <span class="validate-hint">Place both cards to enable</span>
     <button class="validate-btn">Validate</button>
+  </div>
+
+  <!-- INCORRECT FEEDBACK STRIP (SL3: show on incorrect layer) -->
+  <!-- Remove display:none and set to display:flex to preview this state -->
+  <div class="feedback-strip">
+    <span class="fb-icon">✕</span>
+    <div>
+      <div class="fb-text">Not quite — check your answers and try again.</div>
+      <div class="fb-sub">There's only one other combination possible.</div>
+    </div>
+    <button class="retry-btn">Try Again</button>
   </div>
 
   <div class="foot">Triumph · Technician Training</div>
