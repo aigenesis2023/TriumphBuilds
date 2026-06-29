@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 07 — Principal Differences: Key vs Keyless</title>
+<style>
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Medium.otf') format('opentype'); font-weight: 500; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-DemiBold.otf') format('opentype'); font-weight: 600; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-ExtraBold.otf') format('opentype'); font-weight: 800; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Black.otf') format('opentype'); font-weight: 900; }
+:root {
+  --bg: #050508; --surface: #111114; --surface-2: #16161B;
+  --hairline: #2A2A30; --grey-mid: #9090A0; --grey-hi: #D0D0DA;
+  --white: #FFFFFF; --red: #DC1924; --green: #00C853;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--white); font-family: 'Triumph Brokman', sans-serif; overflow: hidden; -webkit-font-smoothing: antialiased; }
+.slide { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.bg { position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 800px 600px at 8% 10%, rgba(220, 25, 36, 0.30) 0%, transparent 55%),
+    radial-gradient(ellipse 700px 600px at 95% 90%, rgba(10, 10, 20, 0.9) 0%, transparent 55%),
+    linear-gradient(135deg, #0A0A12 0%, #050508 55%, #08080B 100%); }
+.bg::before { content: ""; position: absolute; top: -300px; left: -400px; width: 1600px; height: 900px;
+  background: linear-gradient(105deg, transparent 0%, transparent 30%, rgba(220, 25, 36, 0.20) 45%, rgba(255, 100, 110, 0.28) 50%, rgba(220, 25, 36, 0.16) 60%, transparent 75%);
+  transform: rotate(-12deg); filter: blur(60px); opacity: 0.85; }
+.bg::after { content: ""; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(108deg, transparent 0px, transparent 95px, rgba(255,255,255,0.010) 95px, rgba(255,255,255,0.010) 96px); }
+.cm { position: absolute; width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.55); z-index: 5; }
+.cm.tl { top: 28px; left: 28px; border-right: none; border-bottom: none; }
+.cm.tr { top: 28px; right: 28px; border-left: none; border-bottom: none; }
+.cm.bl { bottom: 28px; left: 28px; border-right: none; border-top: none; }
+.cm.br { bottom: 28px; right: 28px; border-left: none; border-top: none; }
+.brand { position: absolute; top: 70px; left: 96px; display: flex; align-items: center; gap: 14px; z-index: 10; }
+.brand .word { font-weight: 800; font-size: 28px; letter-spacing: 0.04em; }
+.brand .tri { width: 26px; height: 26px; position: relative; }
+.brand .tri::before { content: ""; position: absolute; inset: 0; background: var(--white); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+.brand .tri::after { content: ""; position: absolute; top: 35%; left: 35%; width: 30%; height: 50%; background: var(--bg); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+.page { position: absolute; top: 70px; right: 96px; font-size: 16px; color: var(--grey-mid); letter-spacing: 0.10em; font-weight: 500; z-index: 10; }
+.page .cur { color: var(--white); font-weight: 800; }
+.page .dim { color: rgba(255,255,255,0.25); margin: 0 8px; }
+.eyebrow { position: absolute; top: 150px; left: 96px; font-weight: 900; font-size: 32px; letter-spacing: -0.04em; color: var(--red); line-height: 0.8; z-index: 5; }
+.title { position: absolute; top: 195px; left: 96px; z-index: 5; }
+.title h1 { font-weight: 900; font-size: 84px; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
+.title h1 .red { color: var(--red); display: block; }
+.foot { position: absolute; bottom: 50px; left: 96px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; }
+.next { position: absolute; bottom: 40px; right: 96px; width: 64px; height: 64px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); font-weight: 600; z-index: 10; }
+
+.columns {
+  position: absolute;
+  top: 200px;
+  left: 780px;
+  right: 96px;
+  bottom: 110px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  z-index: 5;
+}
+.col {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  display: flex;
+  flex-direction: column;
+}
+.col-header {
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.col.key .col-header { color: var(--grey-hi); border-top: 4px solid rgba(255,255,255,0.25); }
+.col.keyless .col-header { color: var(--red); border-top: 4px solid var(--red); }
+.col-body {
+  flex: 1;
+  padding: 8px 0;
+  overflow: hidden;
+}
+.item {
+  display: flex;
+  gap: 20px;
+  padding: 13px 32px;
+  border-bottom: 1px solid rgba(42,42,48,0.6);
+  align-items: flex-start;
+}
+.item:last-child { border-bottom: none; }
+.item .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+  margin-top: 9px;
+  flex-shrink: 0;
+}
+.col.key .item .dot { background: rgba(255,255,255,0.3); }
+.item p {
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.50;
+  color: var(--grey-hi);
+}
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="bg"></div>
+  <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span><span class="cm br"></span>
+  <div class="brand"><span class="word">TRIUMPH</span><span class="tri"></span></div>
+  <div class="page"><span class="cur">07</span><span class="dim">—</span><span>11</span></div>
+
+  <div class="eyebrow">/////</div>
+  <div class="title"><h1>Principal<br><span class="red">differences.</span></h1></div>
+
+  <div class="columns">
+    <div class="col key">
+      <div class="col-header">KEY System –</div>
+      <div class="col-body">
+        <div class="item"><div class="dot"></div><p>In a traditional key-operated motorcycle ignition system, the rider inserts a physical key into the ignition slot.</p></div>
+        <div class="item"><div class="dot"></div><p>The antenna ring, integrated around the key barrel, reads the RFID (Radio Frequency Identification) signal embedded in the key.</p></div>
+        <div class="item"><div class="dot"></div><p>Once the key is turned, the antenna relays this data to the receiver control unit (RCU), which interfaces with the immobilizer system.</p></div>
+        <div class="item"><div class="dot"></div><p>Upon verifying the correct key, the immobilizer disengages, allowing the ECU (electronic control unit) to activate the electronic fuel injection system (efi).</p></div>
+        <div class="item"><div class="dot"></div><p>With fuel delivery enabled, the engine control system enables efi, and the motorcycle is allowed to start.</p></div>
+      </div>
+    </div>
+    <div class="col keyless">
+      <div class="col-header">KEYLESS System –</div>
+      <div class="col-body">
+        <div class="item"><div class="dot"></div><p>In contrast, a keyless motorcycle ignition system relies on proximity technology.</p></div>
+        <div class="item"><div class="dot"></div><p>The rider carries a smart fob, which emits a secure radio frequency signal. When the rider approaches within a 1m radius, the onboard receiver unit detects the fob's signal.</p></div>
+        <div class="item"><div class="dot"></div><p>As the rider presses the start button, the system autonomously authenticates the fob with a secure set of handshake sequences.</p></div>
+        <div class="item"><div class="dot"></div><p>Once validated, the RCU or CCU (chassis control unit) or KCU (keyless control unit), this will depend on system and model, authorizes the efi ECU to enable ignition and fuel delivery.</p></div>
+        <div class="item"><div class="dot"></div><p>Thus, the motorcycle starts without physical key insertion, relying instead on encrypted proximity communication.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">Triumph · Technician Training</div>
+  <div class="next">›</div>
+</div>
+</body>
+</html>

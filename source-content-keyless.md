@@ -45,12 +45,18 @@ Both contain the TPMS systems (where fitted as an option)
 
 ---
 
-## Slide 6 — 4 Types of Immobiliser [INCOMPLETE]
+## Slide 6 — 4 Types of Immobiliser
 
 There are 4 types of immobiliser system used across the model range
-Comment…?
 
-> ⚠ SME note says "Comment…?" — content appears incomplete. Flag for SME.
+> ⚠ Source slide contains a "Comment…?" floating text box above the table — SME placeholder, intent unclear. Table content below is present and complete. Flag "Comment…?" to SME before publishing.
+
+| Immobiliser Function Location | Key/Keyless | Example Models |
+|---|---|---|
+| RCU (Receiver Control Unit) | Key | Keyed immobiliser models (not 400cc) |
+| CCU (Chassis Control Unit) | Keyless | Early Tiger Models only |
+| KCU (Keyless Control Unit) | Keyless | All other keyless models |
+| Immobiliser | Key | 400cc models |
 
 ---
 

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slide 08 — Feature Comparison Table: Key vs Keyless</title>
+<style>
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Medium.otf') format('opentype'); font-weight: 500; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-DemiBold.otf') format('opentype'); font-weight: 600; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-ExtraBold.otf') format('opentype'); font-weight: 800; }
+@font-face { font-family: 'Triumph Brokman'; src: url('../../TriumphBrokman/TriumphBrokman-Black.otf') format('opentype'); font-weight: 900; }
+:root {
+  --bg: #050508; --surface: #111114; --surface-2: #16161B;
+  --hairline: #2A2A30; --grey-mid: #9090A0; --grey-hi: #D0D0DA;
+  --white: #FFFFFF; --red: #DC1924; --green: #00C853;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; background: var(--bg); color: var(--white); font-family: 'Triumph Brokman', sans-serif; overflow: hidden; -webkit-font-smoothing: antialiased; }
+.slide { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.bg { position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 800px 600px at 8% 10%, rgba(220, 25, 36, 0.30) 0%, transparent 55%),
+    radial-gradient(ellipse 700px 600px at 95% 90%, rgba(10, 10, 20, 0.9) 0%, transparent 55%),
+    linear-gradient(135deg, #0A0A12 0%, #050508 55%, #08080B 100%); }
+.bg::before { content: ""; position: absolute; top: -300px; left: -400px; width: 1600px; height: 900px;
+  background: linear-gradient(105deg, transparent 0%, transparent 30%, rgba(220, 25, 36, 0.20) 45%, rgba(255, 100, 110, 0.28) 50%, rgba(220, 25, 36, 0.16) 60%, transparent 75%);
+  transform: rotate(-12deg); filter: blur(60px); opacity: 0.85; }
+.bg::after { content: ""; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(108deg, transparent 0px, transparent 95px, rgba(255,255,255,0.010) 95px, rgba(255,255,255,0.010) 96px); }
+.cm { position: absolute; width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.55); z-index: 5; }
+.cm.tl { top: 28px; left: 28px; border-right: none; border-bottom: none; }
+.cm.tr { top: 28px; right: 28px; border-left: none; border-bottom: none; }
+.cm.bl { bottom: 28px; left: 28px; border-right: none; border-top: none; }
+.cm.br { bottom: 28px; right: 28px; border-left: none; border-top: none; }
+.brand { position: absolute; top: 70px; left: 96px; display: flex; align-items: center; gap: 14px; z-index: 10; }
+.brand .word { font-weight: 800; font-size: 28px; letter-spacing: 0.04em; }
+.brand .tri { width: 26px; height: 26px; position: relative; }
+.brand .tri::before { content: ""; position: absolute; inset: 0; background: var(--white); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+.brand .tri::after { content: ""; position: absolute; top: 35%; left: 35%; width: 30%; height: 50%; background: var(--bg); clip-path: polygon(50% 5%, 95% 90%, 5% 90%); }
+.page { position: absolute; top: 70px; right: 96px; font-size: 16px; color: var(--grey-mid); letter-spacing: 0.10em; font-weight: 500; z-index: 10; }
+.page .cur { color: var(--white); font-weight: 800; }
+.page .dim { color: rgba(255,255,255,0.25); margin: 0 8px; }
+.eyebrow { position: absolute; top: 150px; left: 96px; font-weight: 900; font-size: 32px; letter-spacing: -0.04em; color: var(--red); line-height: 0.8; z-index: 5; }
+.title { position: absolute; top: 190px; left: 96px; z-index: 5; }
+.title h1 { font-weight: 900; font-size: 64px; line-height: 0.92; letter-spacing: 0.005em; text-transform: uppercase; }
+.title h1 .red { color: var(--red); display: block; }
+.foot { position: absolute; bottom: 50px; left: 96px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--grey-mid); z-index: 5; }
+.next { position: absolute; bottom: 40px; right: 96px; width: 64px; height: 64px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); font-weight: 600; z-index: 10; }
+
+/* Photo placeholder row */
+.photos {
+  position: absolute;
+  top: 160px;
+  left: 500px;
+  right: 96px;
+  height: 140px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  z-index: 5;
+}
+.photo-box {
+  border: 1px dashed rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.photo-box .ph-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+}
+
+/* Comparison table */
+.cmp-table {
+  position: absolute;
+  top: 316px;
+  left: 96px;
+  right: 96px;
+  bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+}
+.cmp-row {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 340px 1fr 1fr;
+  border: 1px solid var(--hairline);
+  border-bottom: none;
+}
+.cmp-row:last-child { border-bottom: 1px solid var(--hairline); }
+.cmp-row.hdr { flex: none; background: var(--surface-2); }
+.cmp-cell {
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--hairline);
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--grey-hi);
+  line-height: 1.4;
+}
+.cmp-cell:last-child { border-right: none; }
+.cmp-row.hdr .cmp-cell {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-mid);
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.cmp-row.hdr .cmp-cell.keyless-col { color: var(--red); }
+.cmp-cell.feature {
+  font-weight: 700;
+  color: var(--white);
+  font-size: 18px;
+}
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="bg"></div>
+  <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span><span class="cm br"></span>
+  <div class="brand"><span class="word">TRIUMPH</span><span class="tri"></span></div>
+  <div class="page"><span class="cur">08</span><span class="dim">—</span><span>11</span></div>
+
+  <div class="eyebrow">/////</div>
+  <div class="title"><h1>Feature<br><span class="red">comparison.</span></h1></div>
+
+  <div class="photos">
+    <div class="photo-box"><span class="ph-label">Key ignition system — photo</span></div>
+    <div class="photo-box"><span class="ph-label">Keyless ignition system — photo</span></div>
+  </div>
+
+  <div class="cmp-table">
+    <div class="cmp-row hdr">
+      <div class="cmp-cell">Feature</div>
+      <div class="cmp-cell">Key Ignition System</div>
+      <div class="cmp-cell keyless-col">Keyless Ignition System</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell feature">Authentication Method</div>
+      <div class="cmp-cell">Physical RFID key detection</div>
+      <div class="cmp-cell">Proximity-based encrypted fob communication</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell feature">Security</div>
+      <div class="cmp-cell">Moderate (key can be lost or copied)</div>
+      <div class="cmp-cell">High (encryption and proximity add security)</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell feature">Complexity of Use</div>
+      <div class="cmp-cell">Simple, traditional operation</div>
+      <div class="cmp-cell">Slightly more complex, automatic detection</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell feature">Reliability</div>
+      <div class="cmp-cell">Proven, long-term technology</div>
+      <div class="cmp-cell">Dependent on battery in fob</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell feature">Convenience</div>
+      <div class="cmp-cell">Requires manual key insertion</div>
+      <div class="cmp-cell">Seamless, no physical action needed</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell feature">Vulnerability to Theft</div>
+      <div class="cmp-cell">Key duplication possible</div>
+      <div class="cmp-cell">Potential fob hacking, relay attacks unless key is 'off'</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell feature">Cost</div>
+      <div class="cmp-cell">Lower, simple mechanical components</div>
+      <div class="cmp-cell">Higher, advanced electronic modules</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell feature">Maintenance</div>
+      <div class="cmp-cell">Low, minimal wear parts</div>
+      <div class="cmp-cell">Medium, fob battery replacement required</div>
+    </div>
+  </div>
+
+  <div class="foot">Triumph · Technician Training</div>
+  <div class="next">›</div>
+</div>
+</body>
+</html>

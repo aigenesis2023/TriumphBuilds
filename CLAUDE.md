@@ -65,7 +65,7 @@ These are the exact section headings the SME defined — use these verbatim on t
 | # | SME section heading | Source slides | Menu item? |
 |---|---|---|---|
 | 1 | Introduction + Nav | 1–3 | No (pre-menu) |
-| 2 | Keyed Vs Keyless Comparrison ⚠ typo | 4–11 | Yes |
+| 2 | Key vs Keyless Comparison | 4–11 | Yes |
 | 3 | Key Type Systems | 12–13 | Yes |
 | 4 | Keyless Systems - Key Communication | 14–23 | Yes |
 | 5 | Key Pairing | 24–32 | Yes |
@@ -74,20 +74,30 @@ These are the exact section headings the SME defined — use these verbatim on t
 | 8 | Case Study | 46–51 | Yes |
 | 9 | PDF Reference Questions | 52–60 | Yes |
 
-⚠ "Comparrison" is a typo in the source — confirm with user whether to correct on menu.
-⚠ "PDF Reference Questions" may need a more learner-friendly label on the menu — TBC.
+⚠ "PDF Reference Questions" label on menu — TBC.
 
 **Known issues in source to resolve before designing:**
-- Slide 6: "Comment…?" — incomplete, needs SME input on 4 types of immobiliser content
+- Slide 6: "Comment…?" floating text box above table — SME placeholder, intent unclear. Table IS designed; flag text to SME before publishing.
 - Slide 15: Draft artefact — discard, design from slides 16 + 17 instead
 - Slide 60: Exact duplicate of slide 59 — drop one
 - Slides 9, 39, 42, 49, 50, 51: Image/diagram-only — visual reference in `source-slides-preview/`
+- Slide 5: "enge run/start" — likely typo for "engine run/start" in source. Used verbatim; confirm with SME.
 
 ---
 
-## Designed slides — carry-over from old source
+## Designed slides (new builds — this session)
 
-Old designs that map cleanly to new source (direct reuse or light content update):
+| Design file | Source slide | Status |
+|---|---|---|
+| 02-course-purpose | 2 | Done ✓ |
+| 03-menu | 3 | Done ✓ |
+| 04-comparison-intro | 4 | Done ✓ |
+| 05-similarities | 5 | Done ✓ |
+| 06-immobiliser-types | 6 | Done ✓ |
+| 07-key-vs-keyless | 7 | Done ✓ |
+| 08-feature-comparison | 8 | Done ✓ |
+
+## Designed slides — carry-over from old source
 
 | Old design file | New source slide(s) | Reuse verdict |
 |---|---|---|
@@ -104,24 +114,21 @@ Old designs that map cleanly to new source (direct reuse or light content update
 | 18b-sequence-frequencies | 15–17 | Template — needs rationalisation first |
 | 22-summary-keys | 26–27 | Template — content expanded |
 
-**Slides 1–8 (intro, menu, overview, ECM types, key system):** User-built in SL3 — assess against new source before rebuilding.
-
-**New slides to build (no old equivalent):**
-- Similarities of Key and Keyless (source 5)
-- 4 Types of Immobiliser (source 6 — pending SME clarification)
+**Still to build:**
 - Drag-drop assessments (sources 10, 11)
 - MCQ slides (sources 18–20, 28–32, 53–60)
 - 90-second timeout note (source 23)
 - Case study (sources 46–51)
 - Keyless Facts section intro (source 52)
+- Slides 12–13 (Key Type Systems section)
+- Slides 9, 22 (image/diagram — need visual ref before designing)
 
 ---
 
 ## Pending questions for SME / user before designing
 
-1. **Source slide 6** — "There are 4 types of immobiliser system used across the model range / Comment…?" Content is incomplete. What goes here?
-2. **Sources 15–17** — three slides with overlapping LF/UHF text. Confirm the rationalised version before I design it.
-3. **Source slide 8** — diagram only. Check `source-slides-preview/slide-08.png` — is this a component diagram we need to recreate?
+1. **Sources 15–17** — three slides with overlapping LF/UHF text. Confirm the rationalised version before designing.
+2. **Slide 5** — "enge run/start" — typo for "engine"? Confirm before publishing.
 
 ---
 
